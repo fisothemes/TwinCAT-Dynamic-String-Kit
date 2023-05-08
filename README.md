@@ -51,7 +51,7 @@ IF bStart THEN
 
 **Output:**
 
-![string builder](./assets/images/string%20builder.PNG)
+![string builder](./assets/images/string%20builder.png)
 
 ---
 
