@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <Itf Name="I_Enumerator" Id="{fb1c7783-16a0-4d69-9830-477716fdeaea}">
+    <Declaration><![CDATA[INTERFACE I_Enumerator EXTENDS I_Disposable]]></Declaration>
+    <Property Name="_Current" Id="{dae0b09f-f0f6-4f2d-b777-d7944d1a9d42}">
+      <Declaration><![CDATA[(* Gets current string representation of element*)
+PROPERTY _Current : T_Long_String
+]]></Declaration>
+      <Get Name="Get" Id="{4a24af66-f892-4e29-b279-82e46b4b2900}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Method Name="Current" Id="{81a01808-6558-4022-9117-75d37d64e632}">
+      <Declaration><![CDATA[// Gets current element. Returns TRUE if retrieval and converstion was successful.
+METHOD Current : BOOL
+VAR_INPUT
+	Value : ANY;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Next" Id="{4bfae206-ce5a-4b7e-a878-e6e09aa2f606}">
+      <Declaration><![CDATA[// Advances enumerator to the next element. On first call or after reset it generates new element data to enumerate over.
+METHOD Next : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="Reset" Id="{1c606de7-8f4c-4beb-b687-3fdb30c0d3a5}">
+      <Declaration><![CDATA[// Sets enumerator to it's intial position. Disposes data pertaining to it's old elements.
+METHOD Reset
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

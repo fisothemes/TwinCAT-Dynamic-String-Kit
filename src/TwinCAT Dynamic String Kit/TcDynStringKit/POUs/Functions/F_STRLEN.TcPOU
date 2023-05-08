@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_STRLEN" Id="{874be76a-bfe9-4c44-98f5-eacf801fe0ff}" SpecialFunc="None">
+    <Declaration><![CDATA[// Gets the length of a string;
+FUNCTION F_STRLEN : T_Size
+VAR_INPUT
+	pString : POINTER TO STRING;
+END_VAR
+VAR
+	i : T_Size := 0;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF pString = 0 THEN RETURN; END_IF
+WHILE pString^[i] <> 0 DO
+	i := i + 1;
+	END_WHILE
+F_STRLEN := i;]]></ST>
+    </Implementation>
+    <LineIds Name="F_STRLEN">
+      <LineId Id="20" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="15" Count="2" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

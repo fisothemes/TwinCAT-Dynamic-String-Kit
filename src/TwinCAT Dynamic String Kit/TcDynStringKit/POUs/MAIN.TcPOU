@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="MAIN" Id="{bb76c191-1e39-4156-925e-1a5af04519cc}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	bStart, bStop : BOOL;
+	rCat : REAL; 
+	nSz, nPs,
+	nLn, nLn2,
+	nCp, nCp2 : T_Size;
+	tTime : DT;
+	sCats, sCats2 : STRING(255);// := 'I love cats';
+	smlCats : STRING(80);
+	pArr  : POINTER TO STRING;
+	fbStrB, fbStrBB : FB_String_Builder;
+	ipEnumerator : I_Enumerator;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[P_Enumerator_Example();
+P_Adapter_Example();
+P_Builder_Example();
+IF NOT bStart THEN RETURN; END_IF
+bStart := FALSE; 
+
+fbStrB.Append('123');
+ipEnumerator := fbStrB.Get_Enumerator();
+WHILE ipEnumerator.Next() DO
+	fbStrBB.Append(ipEnumerator._Current);
+	IF ipEnumerator.Current(rCat) THEN smlCats := CONCAT(smlCats, TO_STRING(rCat)); END_IF
+	nSz := nSz + 1;
+	END_WHILE
+sCats2 := fbStrBB.Get_String();]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="97" Count="2" />
+      <LineId Id="78" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="79" Count="0" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="73" Count="2" />
+      <LineId Id="91" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="76" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

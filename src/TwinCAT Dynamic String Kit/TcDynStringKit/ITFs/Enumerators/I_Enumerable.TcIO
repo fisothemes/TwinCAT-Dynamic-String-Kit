@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <Itf Name="I_Enumerable" Id="{6eb14249-4d5f-4753-92bd-497beb404539}">
+    <Declaration><![CDATA[INTERFACE I_Enumerable EXTENDS T_Query_Interface
+]]></Declaration>
+    <Method Name="Get_Enumerator" Id="{b75ad828-4b10-4bd9-bf8f-17b35aa951aa}">
+      <Declaration><![CDATA[METHOD Get_Enumerator : I_Enumerator
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

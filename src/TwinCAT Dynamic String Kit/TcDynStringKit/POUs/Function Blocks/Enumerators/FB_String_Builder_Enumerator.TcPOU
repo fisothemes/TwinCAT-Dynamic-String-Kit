@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_String_Builder_Enumerator" Id="{8466a430-5af8-4804-a6cb-921d1b446bf2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_String_Builder_Enumerator EXTENDS FB_String_Enumerator_Base
+VAR
+	ipString_Builder : I_String_Builder; 
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="_Current" Id="{1c7c360b-0e9b-4fd3-ae58-c1c887921a7a}">
+      <Declaration><![CDATA[(* Gets current string element*)
+PROPERTY _Current : T_Long_String
+]]></Declaration>
+      <Get Name="Get" Id="{4a928de9-691d-4c6d-a864-501d08540cb0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF THIS^.ipString_Builder = 0 THEN RETURN; END_IF
+_Current := THIS^.ipString_Builder.Get_Char(THIS^.Index);]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Current" Id="{81506a7b-b59e-4636-9497-1499fe73fcf4}">
+      <Declaration><![CDATA[(* Gets current element. Returns TRUE if retrieval and converstion was successful. *)
+METHOD Current : BOOL
+VAR_INPUT
+	Value : ANY;
+END_VAR
+VAR
+	Temp_Str : T_Char;
+	Temp_WStr : WSTRING(1);
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.ipString_Builder = 0 OR Value.diSize = 0 OR Value.pValue = 0 THEN RETURN; END_IF
+Temp_Str := THIS^.ipString_Builder.Get_Char(THIS^.Index);
+Current := F_STRTOANY(Value, Temp_Str);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="FB_init" Id="{21e682db-2486-4e1a-8336-3adf2ff969ac}">
+      <Declaration><![CDATA[{attribute 'no_explicit_call' := 'do not call this POU directly'}
+METHOD FB_init : BOOL
+VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
+	ipString_Builder : I_String_Builder;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.ipString_Builder := ipString_Builder;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Get_Current_Buffer" Id="{4904974d-69e1-4228-b332-9562133506ec}">
+      <Declaration><![CDATA[(* !!!UNSAFE!!! DON'T FORGET TO RELEASE/DELETE FROM	MEMORY WHEN DONE!
+ | Get a copy of the current element as a string buffer whose size is string length + 1.*)
+METHOD Get_Current_Buffer
+VAR_IN_OUT
+	pBuffer	: POINTER TO BYTE;
+END_VAR
+VAR
+	pTemp : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.ipString_Builder = 0 OR THIS^.Index < 0 OR_ELSE THIS^.Index >= THIS^.ipString_Builder._Length THEN RETURN; END_IF
+pTemp := __NEW(BYTE, 2);
+pTemp^ := THIS^.ipString_Builder.Get_Char(THIS^.Index);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Next" Id="{a591dc31-20cc-4208-83ed-070042ee01f5}">
+      <Declaration><![CDATA[(* Advances enumerator to the next element. On first call or after reset it generates new element data to enumerate over.*)
+METHOD Next : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.ipString_Builder = 0 OR_ELSE THIS^.Index >= THIS^.ipString_Builder._Length THEN RETURN; END_IF
+THIS^.Index := THIS^.Index + 1;
+Next := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_String_Builder_Enumerator">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Builder_Enumerator._Current.Get">
+      <LineId Id="5" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Builder_Enumerator.Current">
+      <LineId Id="23" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Builder_Enumerator.FB_init">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Builder_Enumerator.Get_Current_Buffer">
+      <LineId Id="11" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_String_Builder_Enumerator.Next">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

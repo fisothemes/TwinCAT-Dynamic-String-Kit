@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_ISSPACE" Id="{64a3090d-37d8-4578-b255-dbe5dd4579fc}" SpecialFunc="None">
+    <Declaration><![CDATA[// Checks if a character is ' '(space) '$t' (horizontal tab) '$n' (newline) '$r' (carriage return) '$f' (form feed) '$v' (vertical tab)
+FUNCTION F_ISSPACE : BOOL
+VAR_INPUT
+	Char : T_Char;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_ISSPACE := (Char[0] = 32) OR_ELSE (Char[0] = 9) OR_ELSE (Char[0] = 10) OR_ELSE (Char[0] = 13) OR_ELSE (Char[0] = 12) OR_ELSE (Char[0] = 11);]]></ST>
+    </Implementation>
+    <LineIds Name="F_ISSPACE">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

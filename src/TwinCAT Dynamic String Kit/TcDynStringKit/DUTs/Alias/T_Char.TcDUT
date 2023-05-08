@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <DUT Name="T_Char" Id="{c7ed61be-fcbf-4958-8297-7ac57d7a6b68}">
+    <Declaration><![CDATA[TYPE T_Char : STRING(1); END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

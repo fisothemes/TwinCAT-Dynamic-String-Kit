@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <Itf Name="I_Read_Only_Line_Builder_Adapter" Id="{691d2814-da6a-4beb-b2ce-accd421bc0f6}">
+    <Declaration><![CDATA[INTERFACE I_Read_Only_Line_Builder_Adapter EXTENDS T_Query_Interface
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

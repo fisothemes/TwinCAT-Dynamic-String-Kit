@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_STRTOANY" Id="{bcf1633a-b298-4d6c-9ca4-8a73f63bdec2}" SpecialFunc="None">
+    <Declaration><![CDATA[// Converts string to any, returns TRUE if successful
+FUNCTION F_STRTOANY : BOOL
+VAR_INPUT
+	 Value : ANY;
+	 sValue : T_Long_String;
+END_VAR
+VAR	
+	pBool			: POINTER TO BOOL;
+    pByte			: POINTER TO BYTE;
+    pWord			: POINTER TO WORD;
+    pDWord			: POINTER TO DWORD;
+    pLWord			: POINTER TO LWORD;
+    pSint			: POINTER TO SINT;
+    pInt			: POINTER TO INT;
+    pDint			: POINTER TO DINT;
+    pLint			: POINTER TO LINT;
+    pUSint			: POINTER TO USINT;
+    pUInt			: POINTER TO UINT;
+    pUDint			: POINTER TO UDINT;
+    pULint			: POINTER TO ULINT;
+    pReal			: POINTER TO REAL;
+    pLReal			: POINTER TO LREAL;
+    pString			: POINTER TO T_Long_String;
+    pWString		: POINTER TO WSTRING;
+    pTime			: POINTER TO TIME;
+    pDate			: POINTER TO DATE;
+    pDate_And_Time	: POINTER TO DATE_AND_TIME;
+    pTime_Of_Day	: POINTER TO TIME_OF_DAY;
+    pPointer		: POINTER TO PVOID;
+	pLTime 			: POINTER TO LTIME;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_STRTOANY := TRUE;
+IF Value.pValue = 0 THEN F_STRTOANY := FALSE; RETURN; END_IF;
+
+CASE Value.TypeClass OF 
+	__SYSTEM.TYPE_CLASS.TYPE_BOOL:
+		pBool := Value.pValue;
+		pBool^ := TO_BOOL(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_BYTE:
+		pByte := Value.pValue;
+		pByte^ := TO_BYTE(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_WORD:
+		pWord := Value.pValue;
+		pWord^ := TO_WORD(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_DWORD:
+		pDWord := Value.pValue;
+		pDWord^ := TO_DWORD(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_LWORD:
+		pLWord := Value.pValue;
+		pLWord^ := TO_LWORD(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_SINT:
+		pSint := Value.pValue;
+		pSint^ := TO_SINT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_INT:
+		pInt := Value.pValue;
+		pInt^ := TO_INT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_DINT:
+		pDint := Value.pValue;
+		pDint^ := TO_DINT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_LINT:
+		pLint := Value.pValue;
+		pLint^ := TO_LINT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_USINT:
+		pUSint := Value.pValue;
+		pUSint^ := TO_USINT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_UINT:
+		pUInt := Value.pValue;
+		pUInt^ := TO_UINT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_UDINT:
+		pUDint := Value.pValue;
+		pUDint^ := TO_UDINT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_ULINT:
+		pULint := Value.pValue;
+		pULint^ := TO_ULINT(sValue);
+		
+   __SYSTEM.TYPE_CLASS.TYPE_REAL:
+		pReal := Value.pValue;
+		pReal^ := TO_REAL(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_LREAL:
+		pLReal := Value.pValue;
+		pLReal^ := TO_LREAL(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_STRING:
+		F_STRLCPY(Value.pValue, ADR(sValue),Value.diSize); 
+		
+   __SYSTEM.TYPE_CLASS.TYPE_WSTRING:
+   		Tc2_Utilities.STRING_TO_WSTRING2(Value.pValue, ADR(sValue), TO_UDINT(Value.diSize));
+		
+    __SYSTEM.TYPE_CLASS.TYPE_TIME:
+		pTime := Value.pValue;
+		pTime^ := TO_TIME(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_DATE:
+		pDate := Value.pValue;
+		pDate^ := TO_DATE(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME:
+		pDate_And_Time := Value.pValue;
+		pDate_And_Time^ := TO_DT(sValue);
+		
+    __SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY:
+		pTime_Of_Day := Value.pValue;
+		pTime_Of_Day^ := TO_TOD(sValue);
+	
+	__SYSTEM.TYPE_CLASS.TYPE_POINTER:
+		pPointer := Value.pValue;
+		pPointer^ := Tc2_Utilities.STRING_TO_PVOID(sValue);
+		
+	__SYSTEM.TYPE_CLASS.TYPE_LTIME:
+		pLTime := Value.pValue;
+		pLTime^ := TO_LTIME(sValue);
+ELSE
+	F_STRTOANY := FALSE; RETURN; 
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="F_STRTOANY">
+      <LineId Id="289" Count="0" />
+      <LineId Id="160" Count="63" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="226" Count="1" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="230" Count="17" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="248" Count="6" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

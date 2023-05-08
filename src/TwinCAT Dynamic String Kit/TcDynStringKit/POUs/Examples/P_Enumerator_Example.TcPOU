@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="P_Enumerator_Example" Id="{b227b542-53a7-4513-abcd-f9f25dca4fa9}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM INTERNAL P_Enumerator_Example
+VAR
+	bStart : BOOL;
+	sValue : STRING(255);
+	dtTime : DT :=  DT#2023-5-8-12:55:23;
+	fbString_Builder1,
+	fbString_Builder2 : FB_String_Builder;
+	ipEnumerator : I_Enumerator;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bStart THEN
+	bStart := FALSE;
+	
+	fbString_Builder1
+		.Clear()
+		.Append('   I love cats.')
+		.Append('The time is: ').Append_Any(dtTime).Append('.')
+		.Trim_Whitespace(T_Whitespace_Location.Both);
+	
+	ipEnumerator := fbString_Builder1.Get_Enumerator();
+	WHILE ipEnumerator.Next() DO
+		fbString_Builder2.Append(ipEnumerator._Current);
+		END_WHILE
+		
+	sValue := fbString_Builder2.Get_String();
+	END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="P_Enumerator_Example">
+      <LineId Id="12" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="27" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

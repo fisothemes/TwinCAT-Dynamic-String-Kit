@@ -1,0 +1,197 @@
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <FileVersion>1.0.0.0</FileVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{06d805a9-f230-460e-a045-668d838708e1}</ProjectGuid>
+    <SubObjectsSortedByName>True</SubObjectsSortedByName>
+    <DownloadApplicationInfo>true</DownloadApplicationInfo>
+    <WriteProductVersion>true</WriteProductVersion>
+    <GenerateTpy>false</GenerateTpy>
+    <Name>TcDynStringKit</Name>
+    <ProgramVersion>3.1.4023.0</ProgramVersion>
+    <Application>{e0d2e34d-1132-4eaf-b817-58bdfcc2a96f}</Application>
+    <TypeSystem>{6c98dfdc-4718-4227-b033-8d1d816ac7c4}</TypeSystem>
+    <Implicit_Task_Info>{a50cf20f-afdc-4464-bd18-5237fbe0d15c}</Implicit_Task_Info>
+    <Implicit_KindOfTask>{a5dadf37-0e2d-41fb-9718-a5e861fd494e}</Implicit_KindOfTask>
+    <Implicit_Jitter_Distribution>{76c5f3b1-a59d-4c82-9f99-165c8433355b}</Implicit_Jitter_Distribution>
+    <LibraryReferences>{94504b01-9442-4fd9-8ce9-45b44800d9c4}</LibraryReferences>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="DUTs\Alias\T_Query_Interface.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Alias\T_Short_String.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Alias\T_Char.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Alias\T_Long_String.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Alias\T_Size.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Alias\T_Whitespace_Location.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\Enums\E_WHITESPACE_LOCATION.TcTLEO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Adapters\I_Read_Only_Line_Builder_Adapter.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Adapters\I_Read_Only_String_Builder_Adapter.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Adapters\I_Read_Only_Word_Builder_Adapter.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Builders\I_Line_Builder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Builders\I_String_Builder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Builders\I_Word_Builder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Enumerators\I_Disposable.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Enumerators\I_Enumerable.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Enumerators\I_Enumerator.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PlcTask.TcTTO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Examples\P_Enumerator_Example.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Examples\P_Adapter_Example.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Examples\P_Builder_Example.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\Adapters\FB_Read_Only_String_Builder_Adapter.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\Builders\FB_String_Builder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\Enumerators\FB_String_Builder_Enumerator.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\Enumerators\FB_String_Enumerator_Base.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Function Blocks\Internal\FB_Free.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_ANYSTRLEN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_ANYTOSTR.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_STRTOANY.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_ISANYSTRCOMPAT.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_ISSPACE.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_MEMCPY.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_MEMMOVE.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_String_Builder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_STRLCAT.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_STRLCPY.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_STRLEN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_STRSTR.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DUTs" />
+    <Folder Include="DUTs\Alias" />
+    <Folder Include="DUTs\Enums" />
+    <Folder Include="DUTs\Unions" />
+    <Folder Include="DUTs\Structs" />
+    <Folder Include="GVLs" />
+    <Folder Include="ITFs" />
+    <Folder Include="ITFs\Adapters" />
+    <Folder Include="ITFs\Builders" />
+    <Folder Include="ITFs\Enumerators" />
+    <Folder Include="POUs\Function Blocks\Internal" />
+    <Folder Include="POUs\Function Blocks\Builders" />
+    <Folder Include="POUs\Function Blocks\Adapters" />
+    <Folder Include="POUs\Function Blocks\Enumerators" />
+    <Folder Include="POUs\Functions" />
+    <Folder Include="POUs\Function Blocks" />
+    <Folder Include="POUs\Examples" />
+    <Folder Include="VISUs" />
+    <Folder Include="POUs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PlaceholderReference Include="Tc2_Standard">
+      <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Standard</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_System">
+      <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc3_Module">
+      <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc3_Module</Namespace>
+    </PlaceholderReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TcDynStringKit.tmc">
+      <SubType>Content</SubType>
+    </None>
+  </ItemGroup>
+  <ProjectExtensions>
+    <PlcProjectOptions>
+      <XmlArchive>
+        <Data>
+          <o xml:space="preserve" t="OptionKey">
+      <v n="Name">"&lt;ProjectRoot&gt;"</v>
+      <d n="SubKeys" t="Hashtable" />
+      <d n="Values" t="Hashtable" />
+    </o>
+        </Data>
+        <TypeList>
+          <Type n="Hashtable">System.Collections.Hashtable</Type>
+          <Type n="OptionKey">{54dd0eac-a6d8-46f2-8c27-2f43c7e49861}</Type>
+          <Type n="String">System.String</Type>
+        </TypeList>
+      </XmlArchive>
+    </PlcProjectOptions>
+  </ProjectExtensions>
+</Project>

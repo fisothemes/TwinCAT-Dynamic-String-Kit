@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_String_Enumerator_Base" Id="{53f5a01b-897d-4fc6-a5cb-1e89395b8ce3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_String_Enumerator_Base IMPLEMENTS I_Enumerator
+VAR
+	Index : T_Size := -1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="_Current" Id="{e14637df-31b7-4c65-bc62-5176a363a474}">
+      <Declaration><![CDATA[(* Gets current string representation of element*)
+PROPERTY ABSTRACT _Current : T_Long_String
+]]></Declaration>
+      <Get Name="Get" Id="{7bcd9739-d388-46f6-b2f3-c3da901815ba}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Method Name="Current" Id="{82173c8e-1dca-4189-aa46-53fee7e0a36e}">
+      <Declaration><![CDATA[(* Gets current element. Returns TRUE if retrieval and converstion was successful.*)
+METHOD ABSTRACT Current : BOOL
+VAR_INPUT
+	Value : ANY;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Dispose" Id="{95ab4e17-76c0-4363-a0e2-ad9634c110b6}">
+      <Declaration><![CDATA[(* Disposes or release resources for specified task*)
+METHOD Dispose
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Next" Id="{5eca136a-40e5-4f5e-baa2-f6eb76c7383f}">
+      <Declaration><![CDATA[(* Advances enumerator to the next element. On first call or after reset it generates new element data to enumerate over.*)
+METHOD ABSTRACT Next : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reset" Id="{55d0860d-ce83-4e49-9272-08ee65cd9b58}">
+      <Declaration><![CDATA[(* Sets enumerator to it's intial position. Disposes data pertaining to it's old elements.*)
+METHOD Reset
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.Index := -1;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_String_Enumerator_Base">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Enumerator_Base._Current.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Enumerator_Base.Current">
+      <LineId Id="19" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Enumerator_Base.Dispose">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Enumerator_Base.Next">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_String_Enumerator_Base.Reset">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
