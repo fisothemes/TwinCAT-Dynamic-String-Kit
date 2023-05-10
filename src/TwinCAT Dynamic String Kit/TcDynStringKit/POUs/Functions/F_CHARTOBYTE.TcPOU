@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_CHARTOBYTE" Id="{ffe05fa9-9469-43fe-addd-9fa01c298718}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_CHARTOBYTE : BYTE
+VAR_INPUT
+	Char : T_Char;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_CHARTOBYTE := Char[0];]]></ST>
+    </Implementation>
+    <LineIds Name="F_CHARTOBYTE">
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

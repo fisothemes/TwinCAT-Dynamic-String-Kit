@@ -1,6 +1,6 @@
 # TwinCAT Dynamic String Kit
 
-A library that provides tools for working with dynamic strings in TwinCAT. It includes a comprehensive string builder with string enumeration and a read-only string builder adapter. Additionally, there are several C-style string functions, such as `strstr(...)`, `strlcpy(...)`, `isspace(...)`, and more. There are also functions for converting `ANY` to `STRING` and `STRING` to `ANY`.
+A library that provides tools for working with dynamic strings in TwinCAT. It includes a comprehensive string builder with string enumeration and a read-only string builder adapter. Additionally, there are several C-style string functions, such as `isdigit(...)`, `strstr(...)`, `strlcpy(...)`, `isspace(...)`, and more. There are also functions for converting `ANY` to `STRING` and `STRING` to `ANY`.
 
 # Examples
 
@@ -18,7 +18,7 @@ VAR
 END_VAR
 ```
 
-**Implimentation:**
+**Implementation:**
 ```Pascal
 IF bStart THEN
 	bStart := FALSE;
@@ -71,7 +71,7 @@ VAR
 END_VAR
 ```
 
-**Implimentation:**
+**Implementation:**
 ```Pascal
 fbRead_Only_SB(ipString_Builder := fbString_Builder);
 ipRead_Only_SB := fbRead_Only_SB;
@@ -92,7 +92,7 @@ sValue := ipRead_Only_SB
 
 **Output:**
 
-![string builder using adapter](./assets/images/string%20builder%20using%20adapter.png)
+![string builder using an adapter](./assets/images/string%20builder%20using%20adapter.png)
 
 ---
 
@@ -110,7 +110,7 @@ VAR
 END_VAR
 ```
 
-**Implimentation:**
+**Implementation:**
 ```Pascal
 IF bStart THEN
 	bStart := FALSE;

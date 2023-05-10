@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_TRIMWHITESPACE" Id="{80540fe8-fd57-4c87-b581-1472dc410037}" SpecialFunc="None">
+    <Declaration><![CDATA[// Removes all ASCII white space (spaces, tabs, carriage returns, and linefeeds) from the start, end, or both ends of a string
+FUNCTION F_TRIMWHITESPACE
+VAR_INPUT
+	sValue : REFERENCE TO STRING; // String of any size
+	Location : T_Whitespace_Location;
+END_VAR
+VAR
+	Start, End, Length, Str_Len : T_Size := 0;
+	pValue : POINTER TO STRING;
+	bMalloced : BOOL := TRUE;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Length := Str_Len := F_STRLEN(ADR(sValue));
+
+IF Length = 0 THEN RETURN; END_IF
+End := Length - 1;
+
+CASE Location OF
+	T_Whitespace_Location.Start:
+		
+		WHILE ((Start <= End) AND F_ISSPACE(F_BYTETOCHAR(sValue[Start]))) DO Start := Start + 1; END_WHILE
+	T_Whitespace_Location.End: 
+		WHILE ((End >= Start) AND F_ISSPACE(F_BYTETOCHAR(sValue[End]))) DO End := End - 1; END_WHILE
+	T_Whitespace_Location.Both:
+		WHILE ((Start <= End) AND F_ISSPACE(F_BYTETOCHAR(sValue[Start]))) DO Start := Start  + 1; END_WHILE
+		WHILE ((End >= Start) AND F_ISSPACE(F_BYTETOCHAR(sValue[End]))) DO End := End - 1; END_WHILE
+ELSE
+	RETURN;
+END_CASE
+
+Length := End - Start + 1;
+F_MEMMOVE(ADR(sValue), ADR(sValue[Start]), Length);
+sValue[Length] := 0;]]></ST>
+    </Implementation>
+    <LineIds Name="F_TRIMWHITESPACE">
+      <LineId Id="51" Count="1" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="40" Count="2" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="43" Count="7" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="60" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

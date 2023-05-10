@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_ISSIGNEDINT" Id="{53f0e721-cef1-4e7f-9775-68c2ea9fe311}" SpecialFunc="None">
+    <Declaration><![CDATA[// Checks if a string is a signed interger
+FUNCTION F_ISSIGNEDINT : BOOL
+VAR_INPUT
+	sValue : REFERENCE TO STRING;
+END_VAR
+VAR
+	i : T_Size;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_TRIMWHITESPACE(sValue, T_Whitespace_Location.Both);
+
+IF F_BYTETOCHAR(sValue[0]) = '+' OR_ELSE F_BYTETOCHAR(sValue[0]) = '-' THEN i := i + 1; END_IF
+IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i])) THEN RETURN; END_IF
+WHILE F_ISDIGIT(F_BYTETOCHAR(sValue[i])) DO i := i + 1; END_WHILE
+F_ISSIGNEDINT := sValue[i] = 0;]]></ST>
+    </Implementation>
+    <LineIds Name="F_ISSIGNEDINT">
+      <LineId Id="7" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
