@@ -7,7 +7,7 @@ A library that provides tools for working with dynamic strings in TwinCAT. It in
 Working with the string builder.
 
 **Declarations:** 
-```Pascal
+```ST
 VAR
 	bStart              : BOOL;
 	nLn1, nLn2          : T_Size;
@@ -19,7 +19,7 @@ END_VAR
 ```
 
 **Implementation:**
-```Pascal
+```ST
 IF bStart THEN
 	bStart := FALSE;
 	fbString_Builder2
@@ -58,7 +58,7 @@ IF bStart THEN
 Working with the read-only adapter.
 
 **Declarations:** 
-```Pascal
+```ST
 VAR
 	bStart              : BOOL;
 	sValue              : STRING(255);
@@ -72,7 +72,7 @@ END_VAR
 ```
 
 **Implementation:**
-```Pascal
+```ST
 fbRead_Only_SB(ipString_Builder := fbString_Builder);
 ipRead_Only_SB := fbRead_Only_SB;
 
@@ -99,7 +99,7 @@ sValue := ipRead_Only_SB
 Working with the enumerator.
 
 **Declarations:** 
-```Pascal
+```ST
 VAR
 	bStart : BOOL;
 	sValue : STRING(255);
@@ -111,7 +111,7 @@ END_VAR
 ```
 
 **Implementation:**
-```Pascal
+```ST
 IF bStart THEN
 	bStart := FALSE;
 	
