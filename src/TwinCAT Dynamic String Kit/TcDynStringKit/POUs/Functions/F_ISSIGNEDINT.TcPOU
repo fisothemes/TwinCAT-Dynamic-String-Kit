@@ -11,18 +11,16 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_TRIMWHITESPACE(sValue, T_Whitespace_Location.Both);
-
-IF F_BYTETOCHAR(sValue[0]) = '+' OR_ELSE F_BYTETOCHAR(sValue[0]) = '-' THEN i := i + 1; END_IF
+      <ST><![CDATA[IF F_BYTETOCHAR(sValue[0]) = '+' OR_ELSE F_BYTETOCHAR(sValue[0]) = '-' THEN i := i + 1; END_IF
 IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i])) THEN RETURN; END_IF
+WHILE F_ISSPACE(F_BYTETOCHAR(sValue[i])) DO i := i + 1; END_WHILE
 WHILE F_ISDIGIT(F_BYTETOCHAR(sValue[i])) DO i := i + 1; END_WHILE
 F_ISSIGNEDINT := sValue[i] = 0;]]></ST>
     </Implementation>
     <LineIds Name="F_ISSIGNEDINT">
-      <LineId Id="7" Count="0" />
-      <LineId Id="28" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="16" Count="0" />
+      <LineId Id="37" Count="0" />
       <LineId Id="18" Count="1" />
     </LineIds>
   </POU>

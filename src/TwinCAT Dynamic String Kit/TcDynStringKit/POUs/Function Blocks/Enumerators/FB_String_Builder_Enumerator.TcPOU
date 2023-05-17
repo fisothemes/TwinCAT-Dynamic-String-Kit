@@ -27,16 +27,12 @@ _Current := THIS^.ipString_Builder.Get_Char(THIS^.Index);]]></ST>
       <Declaration><![CDATA[(* Gets current element. Returns TRUE if retrieval and converstion was successful. *)
 METHOD Current : BOOL
 VAR_INPUT
-	Value : ANY;
-END_VAR
-VAR
-	Temp_Str : T_Char;
-	Temp_WStr : WSTRING(1);
+	sValue : REFERENCE TO STRING;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF THIS^.ipString_Builder = 0 OR Value.diSize = 0 OR Value.pValue = 0 THEN RETURN; END_IF
-Temp_Str := THIS^.ipString_Builder.Get_Char(THIS^.Index);
-Current := F_STRTOANY(Value, Temp_Str);]]></ST>
+        <ST><![CDATA[IF THIS^.ipString_Builder = 0 THEN RETURN; END_IF
+sValue := THIS^.ipString_Builder.Get_Char(THIS^.Index);
+Current := TRUE;]]></ST>
       </Implementation>
     </Method>
     <Method Name="FB_init" Id="{21e682db-2486-4e1a-8336-3adf2ff969ac}">
@@ -88,7 +84,7 @@ Next := TRUE;]]></ST>
     <LineIds Name="FB_String_Builder_Enumerator.Current">
       <LineId Id="23" Count="0" />
       <LineId Id="30" Count="0" />
-      <LineId Id="32" Count="0" />
+      <LineId Id="43" Count="0" />
     </LineIds>
     <LineIds Name="FB_String_Builder_Enumerator.FB_init">
       <LineId Id="7" Count="0" />

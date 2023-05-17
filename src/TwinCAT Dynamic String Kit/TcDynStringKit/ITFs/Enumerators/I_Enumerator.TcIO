@@ -14,9 +14,8 @@ PROPERTY _Current : T_Long_String
       <Declaration><![CDATA[// Gets current element. Returns TRUE if retrieval and converstion was successful.
 METHOD Current : BOOL
 VAR_INPUT
-	Value : ANY;
-END_VAR
-]]></Declaration>
+	sValue : REFERENCE TO STRING;
+END_VAR]]></Declaration>
     </Method>
     <Method Name="Next" Id="{4bfae206-ce5a-4b7e-a878-e6e09aa2f606}">
       <Declaration><![CDATA[// Advances enumerator to the next element. On first call or after reset it generates new element data to enumerate over.

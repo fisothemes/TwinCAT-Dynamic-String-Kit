@@ -26,7 +26,7 @@ END_VAR
       <Declaration><![CDATA[(* Gets current element. Returns TRUE if retrieval and converstion was successful.*)
 METHOD ABSTRACT Current : BOOL
 VAR_INPUT
-	Value : ANY;
+	sValue : REFERENCE TO STRING;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[]]></ST>

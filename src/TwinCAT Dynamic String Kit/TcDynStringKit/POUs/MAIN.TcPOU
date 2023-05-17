@@ -10,13 +10,13 @@ END_VAR]]></Declaration>
       <ST><![CDATA[P_Enumerator_Example();
 P_Adapter_Example();
 P_Builder_Example();
- 
+
 IF NOT bStart THEN RETURN; END_IF
 bStart := FALSE;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="97" Count="2" />
-      <LineId Id="80" Count="0" />
+      <LineId Id="143" Count="0" />
       <LineId Id="135" Count="1" />
     </LineIds>
   </POU>

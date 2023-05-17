@@ -107,6 +107,9 @@
     <Compile Include="POUs\Functions\F_ISDIGIT.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Functions\F_ISNUM.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Functions\F_ISUNSIGNEDINT.TcPOU">
       <SubType>Code</SubType>
     </Compile>

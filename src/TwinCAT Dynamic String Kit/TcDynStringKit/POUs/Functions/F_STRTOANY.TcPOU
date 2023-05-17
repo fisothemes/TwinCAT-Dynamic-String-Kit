@@ -38,10 +38,12 @@ IF Value.pValue = 0 THEN F_STRTOANY := FALSE; RETURN; END_IF;
 
 CASE Value.TypeClass OF 
 	__SYSTEM.TYPE_CLASS.TYPE_BOOL:
+		IF NOT F_ISBOOL(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pBool := Value.pValue;
 		pBool^ := TO_BOOL(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_BYTE:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pByte := Value.pValue;
 		pByte^ := TO_BYTE(sValue);
 		
@@ -58,42 +60,52 @@ CASE Value.TypeClass OF
 		pLWord^ := TO_LWORD(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_SINT:
+		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pSint := Value.pValue;
 		pSint^ := TO_SINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_INT:
+		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pInt := Value.pValue;
 		pInt^ := TO_INT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_DINT:
+		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pDint := Value.pValue;
 		pDint^ := TO_DINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_LINT:
+		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pLint := Value.pValue;
 		pLint^ := TO_LINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_USINT:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pUSint := Value.pValue;
 		pUSint^ := TO_USINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_UINT:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pUInt := Value.pValue;
 		pUInt^ := TO_UINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_UDINT:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pUDint := Value.pValue;
 		pUDint^ := TO_UDINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_ULINT:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pULint := Value.pValue;
 		pULint^ := TO_ULINT(sValue);
 		
    __SYSTEM.TYPE_CLASS.TYPE_REAL:
+   		IF NOT F_ISNUM(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pReal := Value.pValue;
 		pReal^ := TO_REAL(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_LREAL:
+		IF NOT F_ISNUM(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pLReal := Value.pValue;
 		pLReal^ := TO_LREAL(sValue);
 		
@@ -127,12 +139,36 @@ CASE Value.TypeClass OF
 		pLTime := Value.pValue;
 		pLTime^ := TO_LTIME(sValue);
 ELSE
-	F_STRTOANY := FALSE; RETURN; 
+	F_STRTOANY := FALSE;
 END_CASE]]></ST>
     </Implementation>
     <LineIds Name="F_STRTOANY">
       <LineId Id="289" Count="0" />
-      <LineId Id="160" Count="63" />
+      <LineId Id="160" Count="3" />
+      <LineId Id="323" Count="0" />
+      <LineId Id="164" Count="3" />
+      <LineId Id="324" Count="0" />
+      <LineId Id="168" Count="15" />
+      <LineId Id="356" Count="0" />
+      <LineId Id="184" Count="3" />
+      <LineId Id="357" Count="0" />
+      <LineId Id="188" Count="3" />
+      <LineId Id="358" Count="0" />
+      <LineId Id="192" Count="3" />
+      <LineId Id="359" Count="0" />
+      <LineId Id="196" Count="3" />
+      <LineId Id="360" Count="0" />
+      <LineId Id="200" Count="3" />
+      <LineId Id="361" Count="0" />
+      <LineId Id="204" Count="3" />
+      <LineId Id="362" Count="0" />
+      <LineId Id="208" Count="3" />
+      <LineId Id="363" Count="0" />
+      <LineId Id="212" Count="3" />
+      <LineId Id="366" Count="0" />
+      <LineId Id="216" Count="3" />
+      <LineId Id="367" Count="0" />
+      <LineId Id="220" Count="3" />
       <LineId Id="286" Count="0" />
       <LineId Id="226" Count="1" />
       <LineId Id="287" Count="0" />
