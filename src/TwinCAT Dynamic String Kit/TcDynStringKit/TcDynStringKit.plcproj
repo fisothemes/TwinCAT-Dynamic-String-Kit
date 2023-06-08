@@ -110,6 +110,12 @@
     <Compile Include="POUs\Functions\F_ISNUM.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\Functions\F_ISTIME.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_ISLTIME.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="POUs\Functions\F_ISUNSIGNEDINT.TcPOU">
       <SubType>Code</SubType>
     </Compile>
@@ -117,6 +123,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Functions\F_MALLOCSTR.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Functions\F_STRNCMP.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\Functions\F_STRTOANY.TcPOU">

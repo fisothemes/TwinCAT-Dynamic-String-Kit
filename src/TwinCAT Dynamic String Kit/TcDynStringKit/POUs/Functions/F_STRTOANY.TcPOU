@@ -48,14 +48,17 @@ CASE Value.TypeClass OF
 		pByte^ := TO_BYTE(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_WORD:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pWord := Value.pValue;
 		pWord^ := TO_WORD(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_DWORD:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pDWord := Value.pValue;
 		pDWord^ := TO_DWORD(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_LWORD:
+		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
 		pLWord := Value.pValue;
 		pLWord^ := TO_LWORD(sValue);
 		
@@ -116,8 +119,14 @@ CASE Value.TypeClass OF
    		Tc2_Utilities.STRING_TO_WSTRING2(Value.pValue, ADR(sValue), TO_UDINT(Value.diSize));
 		
     __SYSTEM.TYPE_CLASS.TYPE_TIME:
+		IF NOT F_ISTIME(sValue) THEN RETURN; END_IF
 		pTime := Value.pValue;
 		pTime^ := TO_TIME(sValue);
+		
+	__SYSTEM.TYPE_CLASS.TYPE_LTIME:
+		IF NOT F_ISLTIME(sValue) THEN RETURN; END_IF
+		pLTime := Value.pValue;
+		pLTime^ := TO_LTIME(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_DATE:
 		pDate := Value.pValue;
@@ -135,9 +144,6 @@ CASE Value.TypeClass OF
 		pPointer := Value.pValue;
 		pPointer^ := Tc2_Utilities.STRING_TO_PVOID(sValue);
 		
-	__SYSTEM.TYPE_CLASS.TYPE_LTIME:
-		pLTime := Value.pValue;
-		pLTime^ := TO_LTIME(sValue);
 ELSE
 	F_STRTOANY := FALSE;
 END_CASE]]></ST>
@@ -148,7 +154,13 @@ END_CASE]]></ST>
       <LineId Id="323" Count="0" />
       <LineId Id="164" Count="3" />
       <LineId Id="324" Count="0" />
-      <LineId Id="168" Count="15" />
+      <LineId Id="168" Count="3" />
+      <LineId Id="398" Count="0" />
+      <LineId Id="172" Count="3" />
+      <LineId Id="399" Count="0" />
+      <LineId Id="176" Count="3" />
+      <LineId Id="400" Count="0" />
+      <LineId Id="180" Count="3" />
       <LineId Id="356" Count="0" />
       <LineId Id="184" Count="3" />
       <LineId Id="357" Count="0" />
@@ -172,9 +184,16 @@ END_CASE]]></ST>
       <LineId Id="286" Count="0" />
       <LineId Id="226" Count="1" />
       <LineId Id="287" Count="0" />
-      <LineId Id="230" Count="17" />
+      <LineId Id="230" Count="1" />
+      <LineId Id="431" Count="0" />
+      <LineId Id="232" Count="1" />
+      <LineId Id="433" Count="0" />
+      <LineId Id="435" Count="2" />
+      <LineId Id="434" Count="0" />
+      <LineId Id="234" Count="13" />
       <LineId Id="288" Count="0" />
-      <LineId Id="248" Count="6" />
+      <LineId Id="248" Count="1" />
+      <LineId Id="253" Count="1" />
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>

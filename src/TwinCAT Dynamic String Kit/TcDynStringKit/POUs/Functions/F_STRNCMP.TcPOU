@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_STRNCMP" Id="{74426d89-1630-438f-9b10-7efbd936bf09}" SpecialFunc="None">
+    <Declaration><![CDATA[// Compares n number of characters in a string to determine if theyre the same and returns true if they are.
+FUNCTION F_STRNCMP : BOOL
+VAR_INPUT
+	sValue1, sValue2 : REFERENCE TO STRING; // String of any size
+	Size : T_Size; // Number of characters to compare
+END_VAR
+VAR
+	i : T_Size;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF Size < 1 THEN RETURN; END_IF
+FOR i := 0 TO Size - 1 DO
+	IF (sValue1[i] = 0 AND sValue1[i] = 0) THEN EXIT; END_IF
+	IF (sValue1[i] <> sValue1[i]) OR_ELSE (sValue1[i] = 0 OR sValue1[i] = 0) THEN RETURN; END_IF
+	END_FOR
+F_STRNCMP := TRUE;]]></ST>
+    </Implementation>
+    <LineIds Name="F_STRNCMP">
+      <LineId Id="12" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

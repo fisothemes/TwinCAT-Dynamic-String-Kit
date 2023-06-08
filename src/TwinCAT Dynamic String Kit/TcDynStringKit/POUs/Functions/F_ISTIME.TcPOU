@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_ISTIME" Id="{b8eeb759-8754-4d21-8a75-250a26771353}" SpecialFunc="None">
+    <Declaration><![CDATA[// Checks if string is in the format of the IEC-61131 time datatype format
+FUNCTION F_ISTIME : BOOL
+VAR_INPUT
+	sValue : REFERENCE TO STRING;
+END_VAR
+VAR
+	i, Length : T_Size;
+	pTemp : POINTER TO STRING;
+	sT_Sharp : STRING := 'T#';
+	sTime_Sharp : STRING := 'TIME#';
+	bHas_D,
+	bHas_H,
+	bHas_M,
+	bHas_S,
+	bHas_MS : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Length := F_STRLEN(ADR(sValue));
+pTemp := F_MALLOCSTR(Length+1);
+F_STRLCPY(pTemp, ADR(sValue), Length+1);
+F_TOUPPER(pTemp^);
+IF NOT(F_STRNCMP(pTemp^, sT_Sharp, 2)) OR_ELSE NOT(F_STRNCMP(pTemp^, sTime_Sharp, 5)) THEN __DELETE(pTemp); RETURN; END_IF
+__DELETE(pTemp);
+
+FOR i := SEL(F_BYTETOCHAR(sValue[1]) = '#', 5, 2) TO Length - 1 DO
+	CASE sValue[i] OF
+		68,100: // Check for D/d
+			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF bHas_D OR_ELSE bHas_H OR_ELSE bHas_M OR_ELSE bHas_S OR_ELSE bHas_MS THEN RETURN; END_IF
+			bHas_D := TRUE;
+		72,104: // Check for H/h
+			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF bHas_H OR_ELSE bHas_M OR_ELSE bHas_S OR_ELSE bHas_MS THEN RETURN; END_IF
+			bHas_H := TRUE;
+		77,109: // Check for M/m
+			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF sValue[i+1] = 83 OR_ELSE sValue[i+1] = 115 THEN
+				IF bHas_MS THEN RETURN; END_IF;
+				bHas_MS := TRUE;
+			ELSE
+				IF bHas_M OR_ELSE bHas_S OR_ELSE bHas_MS THEN RETURN; END_IF
+				bHas_M := TRUE;
+				END_IF
+		83,115: // Check for S/s
+			IF sValue[i-1] = 77 OR_ELSE sValue[i-1] = 109 THEN CONTINUE; END_IF
+			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF bHas_S OR_ELSE bHas_MS THEN RETURN; END_IF
+			bHas_S := TRUE;
+	ELSE
+		IF F_ISDIGIT(F_BYTETOCHAR(sValue[i])) THEN CONTINUE; END_IF
+		RETURN;
+	END_CASE
+END_FOR
+IF F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+F_ISTIME := TRUE;
+ ]]></ST>
+    </Implementation>
+    <LineIds Name="F_ISTIME">
+      <LineId Id="7" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="93" Count="0" />
+      <LineId Id="48" Count="1" />
+      <LineId Id="54" Count="0" />
+      <LineId Id="105" Count="2" />
+      <LineId Id="103" Count="0" />
+      <LineId Id="55" Count="0" />
+      <LineId Id="100" Count="0" />
+      <LineId Id="67" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="101" Count="0" />
+      <LineId Id="85" Count="1" />
+      <LineId Id="89" Count="0" />
+      <LineId Id="88" Count="0" />
+      <LineId Id="90" Count="1" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="96" Count="0" />
+      <LineId Id="102" Count="0" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="61" Count="2" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="46" Count="1" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

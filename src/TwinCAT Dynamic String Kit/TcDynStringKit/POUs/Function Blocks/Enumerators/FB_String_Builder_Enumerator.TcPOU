@@ -35,6 +35,22 @@ sValue := THIS^.ipString_Builder.Get_Char(THIS^.Index);
 Current := TRUE;]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Current_Buffer" Id="{4904974d-69e1-4228-b332-9562133506ec}">
+      <Declaration><![CDATA[(* !!!UNSAFE!!! DON'T FORGET TO RELEASE/DELETE FROM	MEMORY WHEN DONE!
+ | Get a copy of the current element as a string buffer whose size is string length + 1.*)
+METHOD Current_Buffer
+VAR_IN_OUT
+	pBuffer	: POINTER TO BYTE;
+END_VAR
+VAR
+	pTemp : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^.ipString_Builder = 0 OR THIS^.Index < 0 OR_ELSE THIS^.Index >= THIS^.ipString_Builder._Length THEN RETURN; END_IF
+pTemp := __NEW(BYTE, 2);
+pTemp^ := THIS^.ipString_Builder.Get_Char(THIS^.Index);]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="FB_init" Id="{21e682db-2486-4e1a-8336-3adf2ff969ac}">
       <Declaration><![CDATA[{attribute 'no_explicit_call' := 'do not call this POU directly'}
 METHOD FB_init : BOOL
@@ -46,22 +62,6 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.ipString_Builder := ipString_Builder;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="Get_Current_Buffer" Id="{4904974d-69e1-4228-b332-9562133506ec}">
-      <Declaration><![CDATA[(* !!!UNSAFE!!! DON'T FORGET TO RELEASE/DELETE FROM	MEMORY WHEN DONE!
- | Get a copy of the current element as a string buffer whose size is string length + 1.*)
-METHOD Get_Current_Buffer
-VAR_IN_OUT
-	pBuffer	: POINTER TO BYTE;
-END_VAR
-VAR
-	pTemp : POINTER TO STRING;
-END_VAR]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF THIS^.ipString_Builder = 0 OR THIS^.Index < 0 OR_ELSE THIS^.Index >= THIS^.ipString_Builder._Length THEN RETURN; END_IF
-pTemp := __NEW(BYTE, 2);
-pTemp^ := THIS^.ipString_Builder.Get_Char(THIS^.Index);]]></ST>
       </Implementation>
     </Method>
     <Method Name="Next" Id="{a591dc31-20cc-4208-83ed-070042ee01f5}">
@@ -86,11 +86,11 @@ Next := TRUE;]]></ST>
       <LineId Id="30" Count="0" />
       <LineId Id="43" Count="0" />
     </LineIds>
+    <LineIds Name="FB_String_Builder_Enumerator.Current_Buffer">
+      <LineId Id="11" Count="2" />
+    </LineIds>
     <LineIds Name="FB_String_Builder_Enumerator.FB_init">
       <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_String_Builder_Enumerator.Get_Current_Buffer">
-      <LineId Id="11" Count="2" />
     </LineIds>
     <LineIds Name="FB_String_Builder_Enumerator.Next">
       <LineId Id="5" Count="0" />

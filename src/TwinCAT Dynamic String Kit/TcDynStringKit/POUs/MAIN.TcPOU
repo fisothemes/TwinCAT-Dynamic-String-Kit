@@ -3,20 +3,20 @@
   <POU Name="MAIN" Id="{bb76c191-1e39-4156-925e-1a5af04519cc}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
-	ssCats : STRING(512) := 'F6kdW1fP7zrn';
-	bStart, bStop : BOOL;
+	ssCats : STRING(80) := 'F6kdW1fP7zrn';
+	bStart, bStop, bIs_Time : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[P_Enumerator_Example();
 P_Adapter_Example();
 P_Builder_Example();
-
+bIs_Time := F_ISLTIME(ssCats);
 IF NOT bStart THEN RETURN; END_IF
 bStart := FALSE;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="97" Count="2" />
-      <LineId Id="143" Count="0" />
+      <LineId Id="148" Count="0" />
       <LineId Id="135" Count="1" />
     </LineIds>
   </POU>
