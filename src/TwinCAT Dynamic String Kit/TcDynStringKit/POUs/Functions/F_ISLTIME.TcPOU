@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_ISLTIME" Id="{d048fade-8caa-4655-83ed-911e9b5c968c}" SpecialFunc="None">
+  <POU Name="F_IsLTime" Id="{d048fade-8caa-4655-83ed-911e9b5c968c}" SpecialFunc="None">
     <Declaration><![CDATA[// Checks if string is in the format of the IEC-61131 ltime datatype format
-FUNCTION F_ISLTIME : BOOL
+FUNCTION F_IsLTime : BOOL
 VAR_INPUT
 	sValue : REFERENCE TO STRING;
 END_VAR
@@ -19,25 +19,25 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[Length := F_STRLEN(ADR(sValue));
-pTemp := F_MALLOCSTR(Length+1);
-F_STRLCPY(pTemp, ADR(sValue), Length+1);
-F_TOUPPER(pTemp^);
-IF NOT(F_STRNCMP(pTemp^, sLTime_Sharp, 6)) THEN __DELETE(pTemp); RETURN; END_IF
+      <ST><![CDATA[Length := F_StrLen(ADR(sValue));
+pTemp := F_MallocStr(Length+1);
+F_StrLCpy(pTemp, ADR(sValue), Length+1);
+F_ToUpper(pTemp^);
+IF NOT(F_StrNCmp(pTemp^, sLTime_Sharp, 6)) THEN __DELETE(pTemp); RETURN; END_IF
 __DELETE(pTemp);
 
 FOR i := 6 TO Length-1 DO
 	CASE sValue[i] OF
 		68,100: // Check for D/d
-			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF NOT F_IsDigit(F_ByteToChar(sValue[i-1])) THEN RETURN; END_IF
 			IF bHas_D OR_ELSE bHas_H OR_ELSE bHas_M OR_ELSE bHas_S OR_ELSE bHas_MS OR_ELSE bHas_NS THEN RETURN; END_IF
 			bHas_D := TRUE;
 		72,104: // Check for H/h
-			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF NOT F_IsDigit(F_ByteToChar(sValue[i-1])) THEN RETURN; END_IF
 			IF bHas_H OR_ELSE bHas_M OR_ELSE bHas_S OR_ELSE bHas_MS OR_ELSE bHas_NS THEN RETURN; END_IF
 			bHas_H := TRUE;
 		77,109: // Check for M/m
-			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF NOT F_IsDigit(F_ByteToChar(sValue[i-1])) THEN RETURN; END_IF
 			IF sValue[i+1] = 83 OR_ELSE sValue[i+1] = 115 THEN
 				IF bHas_MS OR_ELSE bHas_NS THEN RETURN; END_IF;
 				bHas_MS := TRUE;
@@ -48,57 +48,25 @@ FOR i := 6 TO Length-1 DO
 		83,115: // Check for S/s
 			IF sValue[i-1] = 77 OR_ELSE sValue[i-1] = 109 THEN CONTINUE; END_IF
 			IF sValue[i-1] = 78 OR_ELSE sValue[i-1] = 110 THEN CONTINUE; END_IF
-			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF NOT F_IsDigit(F_ByteToChar(sValue[i-1])) THEN RETURN; END_IF
 			IF bHas_S OR_ELSE bHas_MS OR_ELSE bHas_NS THEN RETURN; END_IF
 			bHas_S := TRUE;
 		78, 110: // Check for N/n
-			IF NOT F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
+			IF NOT F_IsDigit(F_ByteToChar(sValue[i-1])) THEN RETURN; END_IF
 			IF bHas_NS THEN RETURN; END_IF
 			IF sValue[i+1] = 83 OR_ELSE sValue[i+1] = 115 THEN bHas_NS := TRUE; CONTINUE; END_IF
 			RETURN;
 	ELSE
-		IF F_ISDIGIT(F_BYTETOCHAR(sValue[i])) THEN CONTINUE; END_IF
+		IF F_IsDigit(F_ByteToChar(sValue[i])) THEN CONTINUE; END_IF
 		RETURN;
 	END_CASE
 END_FOR
-IF F_ISDIGIT(F_BYTETOCHAR(sValue[i-1])) THEN RETURN; END_IF
-F_ISLTIME := TRUE;
+IF F_IsDigit(F_ByteToChar(sValue[i-1])) THEN RETURN; END_IF
+F_IsLTime := TRUE;
  ]]></ST>
     </Implementation>
-    <LineIds Name="F_ISLTIME">
-      <LineId Id="7" Count="0" />
-      <LineId Id="92" Count="0" />
-      <LineId Id="16" Count="1" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="93" Count="0" />
-      <LineId Id="48" Count="1" />
-      <LineId Id="54" Count="0" />
-      <LineId Id="118" Count="0" />
-      <LineId Id="120" Count="0" />
-      <LineId Id="123" Count="1" />
-      <LineId Id="55" Count="0" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="67" Count="0" />
-      <LineId Id="65" Count="0" />
-      <LineId Id="59" Count="0" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="85" Count="1" />
-      <LineId Id="89" Count="0" />
-      <LineId Id="88" Count="0" />
-      <LineId Id="90" Count="1" />
-      <LineId Id="87" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="96" Count="0" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="102" Count="0" />
-      <LineId Id="81" Count="0" />
-      <LineId Id="84" Count="0" />
-      <LineId Id="126" Count="2" />
-      <LineId Id="131" Count="1" />
-      <LineId Id="61" Count="2" />
-      <LineId Id="53" Count="0" />
-      <LineId Id="52" Count="0" />
-      <LineId Id="46" Count="1" />
+    <LineIds Name="F_IsLTime">
+      <LineId Id="505" Count="43" />
       <LineId Id="22" Count="0" />
     </LineIds>
   </POU>

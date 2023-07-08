@@ -1,20 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_ISBOOL" Id="{6e73a061-9665-4ba7-9d40-c4ac14cba95b}" SpecialFunc="None">
+  <POU Name="F_IsBool" Id="{6e73a061-9665-4ba7-9d40-c4ac14cba95b}" SpecialFunc="None">
     <Declaration><![CDATA[// Checks if string is boolean
-FUNCTION F_ISBOOL : BOOL
+FUNCTION F_IsBool : BOOL
 VAR_INPUT
-	sValue : T_Long_String;
+	sValue : T_LongString;
 END_VAR
 VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_TOUPPER(sValue);
-F_ISBOOL := sValue = 'FALSE' OR_ELSE sValue = 'TRUE';]]></ST>
+      <ST><![CDATA[F_ToUpper(sValue);
+F_IsBool := sValue = 'FALSE' OR_ELSE sValue = 'TRUE';]]></ST>
     </Implementation>
-    <LineIds Name="F_ISBOOL">
-      <LineId Id="7" Count="0" />
+    <LineIds Name="F_IsBool">
+      <LineId Id="44" Count="0" />
       <LineId Id="12" Count="0" />
     </LineIds>
   </POU>

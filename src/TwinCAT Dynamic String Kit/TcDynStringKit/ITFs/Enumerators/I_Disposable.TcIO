@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
   <Itf Name="I_Disposable" Id="{a19faa79-5ada-4236-bfe1-0edd4757a6d2}">
-    <Declaration><![CDATA[INTERFACE I_Disposable EXTENDS T_Query_Interface
+    <Declaration><![CDATA[INTERFACE I_Disposable EXTENDS T_QueryInterface
 ]]></Declaration>
     <Method Name="Dispose" Id="{7997981b-8d5c-4f40-8ae3-54bdda49b7d2}">
       <Declaration><![CDATA[// Disposes or release resources for specified task

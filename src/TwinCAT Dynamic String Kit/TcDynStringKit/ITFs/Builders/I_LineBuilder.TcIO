@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <Itf Name="I_LineBuilder" Id="{25de0b71-969b-4988-a3f7-e3b24d80f633}">
+    <Declaration><![CDATA[INTERFACE I_LineBuilder EXTENDS T_QueryInterface
+]]></Declaration>
+  </Itf>
+</TcPlcObject>

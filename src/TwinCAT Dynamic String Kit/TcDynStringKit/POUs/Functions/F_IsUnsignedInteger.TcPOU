@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_IsUnsignedInteger" Id="{e25af886-1eea-4141-8cc6-330bf17a78ea}" SpecialFunc="None">
+    <Declaration><![CDATA[// Checks if a string is an unsigned interger
+FUNCTION F_IsUnsignedInteger : BOOL
+VAR_INPUT
+	sValue : REFERENCE TO STRING;
+END_VAR
+VAR
+	i : T_Size;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF NOT F_IsDigit(F_ByteToChar(sValue[0])) THEN RETURN; END_IF
+WHILE F_IsSpace(F_ByteToChar(sValue[i])) DO i := i + 1; END_WHILE
+WHILE F_IsDigit(F_ByteToChar(sValue[i])) DO i := i + 1; END_WHILE
+F_IsUnsignedInteger := sValue[i] = 0; ]]></ST>
+    </Implementation>
+    <LineIds Name="F_IsUnsignedInteger">
+      <LineId Id="46" Count="2" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

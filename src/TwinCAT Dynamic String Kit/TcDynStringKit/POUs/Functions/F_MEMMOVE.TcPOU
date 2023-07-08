@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_MEMMOVE" Id="{8c807743-9108-45db-8f93-34751b442990}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION F_MEMMOVE : POINTER TO BYTE
+  <POU Name="F_MemMove" Id="{8c807743-9108-45db-8f93-34751b442990}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_MemMove : POINTER TO BYTE
 VAR_INPUT
 	pDst,
 	pSrc : POINTER TO BYTE;
@@ -19,9 +19,9 @@ IF pDst < pSrc THEN
 ELSE
 	FOR i := Size TO 1 BY -1 DO pDst[i-1] := pSrc[i-1]; END_FOR
 	END_IF
-F_MEMMOVE := pDst;]]></ST>
+F_MemMove := pDst;]]></ST>
     </Implementation>
-    <LineIds Name="F_MEMMOVE">
+    <LineIds Name="F_MemMove">
       <LineId Id="7" Count="0" />
       <LineId Id="17" Count="0" />
       <LineId Id="15" Count="0" />

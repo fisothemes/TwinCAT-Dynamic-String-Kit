@@ -1,43 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_STRLCAT" Id="{363136b3-81c1-443a-81f9-a30ae48f5ca0}" SpecialFunc="None">
+  <POU Name="F_StrLCat" Id="{363136b3-81c1-443a-81f9-a30ae48f5ca0}" SpecialFunc="None">
     <Declaration><![CDATA[// Safe string concat. RETURNS length of concatinated string.
 // Concatinates up to destination size.
-FUNCTION F_STRLCAT : T_Size
+FUNCTION F_StrLCat : T_Size
 VAR_INPUT
 	pDst : POINTER TO STRING; // Destination string
 	pSrc : POINTER TO STRING; // Source string     
-	Dst_Size : T_Size; // Byte size of destnation string including the null character
+	DstSize : T_Size; // Byte size of destnation string including the null character
 END_VAR
 VAR
-	Src_Len, Dst_Len, Copy_Len : T_Size;
+	SrcLen, DstLen, CopyLen : T_Size;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF pDst = 0 OR pSrc = 0 THEN RETURN; END_IF
 
-Dst_Len := F_STRLEN(pDst);
-Src_Len := F_STRLEN(pSrc);
+DstLen := F_StrLen(pDst);
+SrcLen := F_StrLen(pSrc);
 
-IF Dst_Size <= 0 OR Dst_Len >= Dst_Size THEN F_STRLCAT := Src_Len; RETURN; END_IF
+IF DstSize <= 0 OR DstLen >= DstSize THEN F_StrLCat := SrcLen; RETURN; END_IF
 
-Copy_Len := Dst_Size - Dst_Len - 1;
+CopyLen := DstSize - DstLen - 1;
 
-F_MEMCPY(pDst + TO_UDINT(Dst_Len), pSrc, Copy_Len);
-pDst^[Dst_Len + Copy_Len] := 0;
-F_STRLCAT := Dst_Len + Src_Len;]]></ST>
+F_MemCpy(pDst + TO_UDINT(DstLen), pSrc, CopyLen);
+pDst^[DstLen + CopyLen] := 0;
+F_StrLCat := DstLen + SrcLen;]]></ST>
     </Implementation>
-    <LineIds Name="F_STRLCAT">
-      <LineId Id="7" Count="0" />
-      <LineId Id="36" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="34" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="21" Count="0" />
+    <LineIds Name="F_StrLCat">
+      <LineId Id="123" Count="10" />
       <LineId Id="13" Count="0" />
     </LineIds>
   </POU>

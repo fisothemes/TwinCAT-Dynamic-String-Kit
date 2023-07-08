@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_StringBuilder" Id="{55e881ac-c530-44b9-b16a-c0ea1631cee2}" SpecialFunc="None">
+    <Declaration><![CDATA[// String builder function
+FUNCTION F_StringBuilder : REFERENCE TO FB_StringBuilder
+VAR_STAT
+	fbStringBuilder : FB_StringBuilder;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbStringBuilder.Clear();
+F_StringBuilder REF= fbStringBuilder;]]></ST>
+    </Implementation>
+    <LineIds Name="F_StringBuilder">
+      <LineId Id="26" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

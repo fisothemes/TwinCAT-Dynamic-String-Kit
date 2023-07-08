@@ -1,0 +1,971 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="FB_StringBuilder" Id="{4bfd7369-678a-4946-9112-ed6456534c78}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'no_assign'}
+{attribute 'enable_dynamic_creation'}
+{attribute 'no_explicit_call' := 'do not call this POU directly'}
+FUNCTION_BLOCK FB_StringBuilder IMPLEMENTS I_StringBuilder, I_Enumerable
+VAR CONSTANT
+	Default_Capacity : T_Size := 256;
+END_VAR
+VAR
+	{attribute 'hide'} 
+	_Capacity : T_Size := THIS^.Default_Capacity;
+	{attribute 'hide'} 
+	_Length : T_Size := 0;
+	_pBuffer : POINTER TO STRING := THIS^.Malloc(THIS^.Capacity);
+END_VAR
+VAR CONSTANT
+	{attribute 'hide'} 
+	_fbFree : FB_Free(THIS^._pBuffer) := ();
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Folder Name="Private" Id="{3c3e121d-c945-45bd-b6bd-25e0688a969f}" />
+    <Folder Name="Protected" Id="{4477869e-92c9-4a27-9c5f-70db177e2987}" />
+    <Method Name="Append" Id="{01d06d20-00ca-4ddb-ac88-d57d11106c30}">
+      <Declaration><![CDATA[// Appends the given string to the end of the string builder's contents.
+METHOD Append : I_StringBuilder
+VAR_INPUT
+	sValue : T_LongString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Append := THIS^.AppendAny(sValue);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AppendAny" Id="{bbc36120-bb82-4698-869d-56f829e1ec49}">
+      <Declaration><![CDATA[// Appends the given value to the end of the string builder's contents.
+METHOD AppendAny : I_StringBuilder
+VAR_INPUT
+	Value : ANY;
+END_VAR
+VAR
+	bMalloced : BOOL := TRUE;
+	Str_Len : T_Size;
+	pValue : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AppendAny := THIS^;
+CASE Value.TypeClass OF
+	__SYSTEM.TYPE_CLASS.TYPE_STRING: 
+		Str_Len := F_StrLen(Value.pValue);
+		pValue := Value.pValue;
+		bMalloced := FALSE;
+		
+	__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
+		Str_Len := TO_DINT(Tc2_Utilities.WLEN2(Value.pValue));
+		pValue := THIS^.Malloc(Str_Len);
+		Tc2_Utilities.WSTRING_TO_STRING2(pValue, Value.pValue, TO_UDINT(Str_Len));
+		
+	__SYSTEM.TYPE_CLASS.TYPE_BOOL,
+	__SYSTEM.TYPE_CLASS.TYPE_BYTE,
+	__SYSTEM.TYPE_CLASS.TYPE_WORD,
+	__SYSTEM.TYPE_CLASS.TYPE_DWORD,
+	__SYSTEM.TYPE_CLASS.TYPE_LWORD,
+	__SYSTEM.TYPE_CLASS.TYPE_SINT,
+	__SYSTEM.TYPE_CLASS.TYPE_INT,
+	__SYSTEM.TYPE_CLASS.TYPE_DINT,
+	__SYSTEM.TYPE_CLASS.TYPE_LINT,
+	__SYSTEM.TYPE_CLASS.TYPE_USINT,
+	__SYSTEM.TYPE_CLASS.TYPE_UINT,
+	__SYSTEM.TYPE_CLASS.TYPE_UDINT,
+	__SYSTEM.TYPE_CLASS.TYPE_ULINT,
+	__SYSTEM.TYPE_CLASS.TYPE_REAL,
+	__SYSTEM.TYPE_CLASS.TYPE_LREAL,
+	__SYSTEM.TYPE_CLASS.TYPE_TIME,
+	__SYSTEM.TYPE_CLASS.TYPE_LTIME,
+	__SYSTEM.TYPE_CLASS.TYPE_DATE,
+	__SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME,
+	__SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY,
+	__SYSTEM.TYPE_CLASS.TYPE_POINTER:
+		pValue := THIS^.Malloc(SIZEOF(T_LongString));
+		pValue^ := F_AnyToString(Value);
+		Str_Len := F_StrLen(pValue);
+ELSE
+	RETURN;
+END_CASE
+
+IF (THIS^.Length + Str_Len) >= THIS^.Capacity THEN
+	THIS^.Reserve((THIS^.Length + Str_Len + 1)*2);
+	END_IF
+
+THIS^.Length := THIS^.Length + Str_Len;
+F_StrLCat(THIS^._pBuffer, pValue, THIS^.Length + 1);
+
+IF bMalloced THEN __DELETE(pValue); END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AppendBuffer" Id="{ab096c91-db1d-45c9-9802-c30c8edda13d}">
+      <Declaration><![CDATA[// !!!UNSAFE!!! THIS WILL APPEND UP TO THE NULL CHARACTER. IF NO NULL EXISTS, THIS WILL RUN FOREVER!
+// | Append raw values directly to the internal string buffer. This is meant for appending dynamic strings to the string builder.
+METHOD AppendBuffer : I_StringBuilder
+VAR_INPUT
+	pBuffer : POINTER TO BYTE;
+END_VAR
+VAR
+	Str_Len : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AppendBuffer := THIS^;
+IF pBuffer = 0 THEN RETURN; END_IF
+Str_Len := F_StrLen(pBuffer);
+
+IF (THIS^.Length + Str_Len) >= THIS^.Capacity THEN
+	THIS^.Reserve((THIS^.Length + Str_Len + 1)*2);
+	END_IF
+	
+THIS^.Length := THIS^.Length + Str_Len;
+F_StrLCat(THIS^._pBuffer, pBuffer, THIS^.Length + 1);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="AppendLine" Id="{47bb1f01-ff10-4f2d-b428-52f8d3d2a7d9}">
+      <Declaration><![CDATA[// Appends a new line (\r\n or $r$n) to string builder's contents.
+METHOD AppendLine : I_StringBuilder]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[AppendLine := THIS^;
+THIS^.Append('$r$n');]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="BTrim" Id="{baabad4b-9105-41bd-a958-cfa16de0468c}">
+      <Declaration><![CDATA[// Removes all ASCII white space (spaces, tabs, carriage returns, and linefeeds) from the beginning and end of string in the string builder
+METHOD BTrim : I_StringBuilder
+VAR
+	Start, End, Length : T_Size := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[BTrim := THIS^;
+IF THIS^.Length = 0 THEN RETURN; END_IF
+End := THIS^.Length - 1;
+
+WHILE ((Start <= End) AND THIS^.Is_Space(THIS^._pBuffer^[Start])) DO Start := Start  + 1; END_WHILE
+WHILE ((End >= Start) AND THIS^.Is_Space(THIS^._pBuffer^[End])) DO End := End  - 1; END_WHILE
+
+Length := end - start + 1;
+F_MemMove(THIS^._pBuffer, ADR(THIS^._pBuffer^[Start]), Length);
+THIS^.Length := Length;
+THIS^._pBuffer^[THIS^.Length] := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Capacity" Id="{7a1eab10-ae41-45cb-bda3-567ca6b8ca2b}">
+      <Declaration><![CDATA[// Number of bytes allocated in memory for the string builder's contents.
+PROPERTY Capacity : T_Size]]></Declaration>
+      <Get Name="Get" Id="{737e6d02-df74-49cc-8ebb-4ee9bfcdb284}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Capacity := THIS^._Capacity;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{bd69bbff-5cad-44c9-9d07-120ef29a443c}">
+        <Declaration><![CDATA[PROTECTED]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^._Capacity := Capacity;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="Clear" Id="{783fdd2d-09f4-4c32-a081-6c3bbdd1c93b}">
+      <Declaration><![CDATA[// Empties the string builder's contents, resetting its length to zero.
+METHOD Clear : I_StringBuilder]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Clear := THIS^;
+THIS^.Free();
+THIS^.Capacity := THIS^.Default_Capacity;
+THIS^.Length := 0;
+THIS^._pBuffer := THIS^.Malloc(THIS^.Capacity);
+THIS^._pBuffer^[0] := 0;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CopySubstringTo" Id="{f5cac2bf-671f-41eb-b88a-0fca63f88e19}">
+      <Declaration><![CDATA[// Copies a subset of characters in the string builder from specified position at specified length to a string
+METHOD CopySubstringTo : I_StringBuilder
+VAR_INPUT
+	Position, Length : T_Size;
+	Value : ANY;
+END_VAR
+VAR
+	pTemp : POINTER TO BYTE;
+	pwsTemp : POINTER TO WSTRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CopySubstringTo := THIS^;
+IF Value.pValue = 0 THEN RETURN; END_IF
+CASE Value.TypeClass OF
+	__SYSTEM.TYPE_CLASS.TYPE_STRING:
+		Length := MIN(Length, Value.diSize - 1);
+		IF (Position > THIS^.Length) OR_ELSE (Length <= 0) OR_ELSE (THIS^.Length = 0) THEN Value.pValue[0] := 0; RETURN; END_IF
+		F_StrLCpy(Value.pValue, ADR(THIS^._pBuffer^[Position]), Length + 1);
+		
+	__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
+		Length := MIN(Length, (Value.diSize/2) - 1 );
+		IF (Position > THIS^.Length) OR_ELSE (Length = 0) OR_ELSE (THIS^.Length = 0) THEN pwsTemp := Value.pValue; pwsTemp^ := ""; RETURN; END_IF
+		pTemp := THIS^.Malloc(Length + 1);
+		F_StrLCpy(pTemp, ADR(THIS^._pBuffer^[Position]), Length + 1);
+		Tc2_Utilities.STRING_TO_WSTRING2(Value.pValue, pTemp, TO_UDINT((Length*2)+1));
+		__DELETE(pTemp);
+ELSE
+	F_StrToAny(Value, THIS^.GetSubstring(Position, Length));
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CopyTo" Id="{6dee6299-607f-420c-87bf-d6ba465e5957}">
+      <Declaration><![CDATA[// Copies contents of string builder to given string of any size
+METHOD CopyTo : I_StringBuilder
+VAR_INPUT
+	Value : ANY;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CopyTo := THIS^;
+IF THIS^._pBuffer = 0 THEN Value.pValue[0] := 0; RETURN; END_IF 
+CASE Value.TypeClass OF
+	__SYSTEM.TYPE_CLASS.TYPE_STRING:
+		F_StrLCpy(Value.pValue, THIS^._pBuffer, Value.diSize);
+	__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
+		Tc2_Utilities.STRING_TO_WSTRING2(Value.pValue, THIS^._pBuffer, TO_UDINT(Value.diSize));
+ELSE
+	F_StrToAny(Value, THIS^.GetString());
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Free" Id="{f566a732-3ec5-4648-b07b-3c7c9489a31b}" FolderPath="Protected\">
+      <Declaration><![CDATA[// Dealloocates String from memory
+METHOD PROTECTED Free
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF THIS^._pBuffer <> 0 THEN __DELETE(THIS^._pBuffer); END_IF
+THIS^.Capacity := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetBuffer" Id="{2c0611a8-2ab7-47c6-a25b-f84c5611fd08}">
+      <Declaration><![CDATA[// !!!UNSAFE!!! DON'T FORGET TO RELEASE/DELETE FROM	MEMORY WHEN DONE!
+// | Get a copy of the internal string buffer at the size of the string length + 1.
+METHOD GetBuffer : I_StringBuilder
+VAR_IN_OUT
+	pBuffer : POINTER TO BYTE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetBuffer := THIS^;
+pBuffer := THIS^.Malloc(THIS^.Length + 1);
+F_StrLCpy(pBuffer, THIS^._pBuffer, THIS^.Length + 1);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetCapacity" Id="{3f0a7335-54fd-4d8c-93df-4a361b67bb88}">
+      <Declaration><![CDATA[// Retrieves the number of bytes allocated in memory for the string builder's contents.
+METHOD GetCapacity : I_StringBuilder
+VAR_OUTPUT
+	Capacity : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetCapacity := THIS^;
+Capacity := THIS^.Capacity;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetChar" Id="{de5c8ed1-c067-4d7b-922b-537b0e46a5f7}">
+      <Declaration><![CDATA[// Gets character at specified position in the string builder
+METHOD GetChar : T_Char
+VAR_INPUT
+	Position : T_Size;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Position < 0 THEN RETURN; END_IF
+IF Position > THIS^.Length THEN RETURN; END_IF
+GetChar[0] := THIS^._pBuffer^[Position];]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetEnumerator" Id="{88dbe339-378c-45d6-bb2a-ab340943596d}">
+      <Declaration><![CDATA[METHOD GetEnumerator : I_Enumerator
+VAR_INST
+	fbEnumerator : FB_StringBuilderEnumerator(THIS^);
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetEnumerator := fbEnumerator;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetLength" Id="{28151eb1-85c5-450d-9b23-ac2e54cd2b0d}">
+      <Declaration><![CDATA[// Retrieves the current size of string builder contents
+METHOD GetLength : I_StringBuilder
+VAR_OUTPUT
+	Length : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[GetLength := THIS^;
+Length := THIS^.Length;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetString" Id="{60b5f273-83ef-4a38-98c6-d4a9815f983f}">
+      <Declaration><![CDATA[// Converts contents of string builder to string and returns them
+METHOD GetString : T_LongString]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.CopyTo(GetString);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="GetSubstring" Id="{b9f92418-c277-4297-84a9-e70a422ab510}">
+      <Declaration><![CDATA[// Get a subset of characters in the string builder from specified position at specified length and returns them as a string
+METHOD GetSubstring : T_LongString
+VAR_INPUT
+	Position, Length : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[THIS^.CopySubstringTo(Position, Length, GetSubstring);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Insert" Id="{0f715bee-e923-4cb0-9c9d-189ede2e8e1b}">
+      <Declaration><![CDATA[// Inserts the given string at the specified position.
+METHOD Insert : I_StringBuilder
+VAR_INPUT
+	Position : T_Size;
+	sValue : T_LongString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Insert := THIS^.InsertAny(Position, sValue);
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InsertAny" Id="{108fe9a3-24cb-4e3e-a1c9-a5948a95313d}">
+      <Declaration><![CDATA[// Inserts the given value at the specified position.
+METHOD InsertAny : I_StringBuilder
+VAR_INPUT
+	Position : T_Size;
+	Value : ANY;
+END_VAR
+VAR
+	bMalloced : BOOL := TRUE;
+	Str_Len : T_Size;
+	pValue : POINTER TO STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[InsertAny := THIS^;
+IF Position < 0 OR Position > THIS^.Length THEN RETURN; END_IF 
+CASE Value.TypeClass OF
+	__SYSTEM.TYPE_CLASS.TYPE_STRING: 
+		Str_Len := F_StrLen(Value.pValue);
+		pValue := Value.pValue;
+		bMalloced := FALSE;
+	
+	__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
+		Str_Len := TO_DINT(Tc2_Utilities.WLEN2(Value.pValue));
+		pValue := THIS^.Malloc(Str_Len);
+		Tc2_Utilities.WSTRING_TO_STRING2(pValue, Value.pValue, TO_UDINT(Str_Len));
+
+	__SYSTEM.TYPE_CLASS.TYPE_BOOL,
+	__SYSTEM.TYPE_CLASS.TYPE_BYTE,
+	__SYSTEM.TYPE_CLASS.TYPE_WORD,
+	__SYSTEM.TYPE_CLASS.TYPE_DWORD,
+	__SYSTEM.TYPE_CLASS.TYPE_LWORD,
+	__SYSTEM.TYPE_CLASS.TYPE_SINT,
+	__SYSTEM.TYPE_CLASS.TYPE_INT,
+	__SYSTEM.TYPE_CLASS.TYPE_DINT,
+	__SYSTEM.TYPE_CLASS.TYPE_LINT,
+	__SYSTEM.TYPE_CLASS.TYPE_USINT,
+	__SYSTEM.TYPE_CLASS.TYPE_UINT,
+	__SYSTEM.TYPE_CLASS.TYPE_UDINT,
+	__SYSTEM.TYPE_CLASS.TYPE_ULINT,
+	__SYSTEM.TYPE_CLASS.TYPE_REAL,
+	__SYSTEM.TYPE_CLASS.TYPE_LREAL,
+	__SYSTEM.TYPE_CLASS.TYPE_TIME,
+	__SYSTEM.TYPE_CLASS.TYPE_LTIME,
+	__SYSTEM.TYPE_CLASS.TYPE_DATE,
+	__SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME,
+	__SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY,
+	__SYSTEM.TYPE_CLASS.TYPE_POINTER:
+		pValue := THIS^.Malloc(SIZEOF(T_LongString));
+		pValue^ := F_AnyToString(Value);
+		Str_Len := F_StrLen(pValue);
+ELSE
+	RETURN;
+END_CASE
+
+IF (THIS^.Length + Str_Len) >= THIS^.Capacity THEN
+	THIS^.Reserve((THIS^.Length + Str_Len + 1)*2);
+	END_IF
+
+F_MemMove(THIS^._pBuffer + TO_UDINT(Position) + TO_UDINT(Str_Len), THIS^._pBuffer + TO_UDINT(Position), THIS^.Length - Position + 1);
+F_MemCpy(THIS^._pBuffer + TO_UDINT(Position), pValue, Str_Len); 
+THIS^.Length := THIS^.Length + Str_Len;
+
+IF bMalloced THEN __DELETE(pValue); END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="InsertBuffer" Id="{e4fce2fa-3e69-42b4-8422-9b4b1cd1d44e}">
+      <Declaration><![CDATA[// !!!UNSAFE!!! THIS WILL INSERT UP TO THE NULL CHARACTER. IF NO NULL EXISTS, THIS WILL RUN FOREVER!
+// | Inserts raw values directly to the internal string buffer at the specified position. This is meant for inserting dynamic strings to the string builder.
+METHOD InsertBuffer : I_StringBuilder
+VAR_INPUT
+	Position : T_Size;
+	pBuffer : POINTER TO BYTE;
+END_VAR
+VAR
+	Str_Len : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[InsertBuffer := THIS^;
+IF pBuffer = 0 OR Position < 0 OR Position > THIS^.Length THEN RETURN; END_IF
+Str_Len := F_StrLen(pBuffer);
+
+IF (THIS^.Length + Str_Len) >= THIS^.Capacity THEN
+	THIS^.Reserve((THIS^.Length + Str_Len + 1)*2);
+	END_IF
+
+F_MemMove(THIS^._pBuffer + TO_UDINT(Position) + TO_UDINT(Str_Len), THIS^._pBuffer + TO_UDINT(Position), THIS^.Length - Position + 1);
+F_MemCpy(THIS^._pBuffer + TO_UDINT(Position), pBuffer, Str_Len); 
+THIS^.Length := THIS^.Length + Str_Len;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Is_Space" Id="{1b805b4e-1581-4fd2-adcb-7bfeeedf6485}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED Is_Space : BOOL
+VAR_INPUT
+	nChar : BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Is_Space := (nChar = 32) OR_ELSE (nChar = 9) OR_ELSE (nChar = 10) OR_ELSE (nChar = 13) OR_ELSE (nChar = 12) OR_ELSE (nChar = 11);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Join" Id="{9dc96dcf-9c4f-4a3b-8f16-54ac73d078a5}">
+      <Declaration><![CDATA[// Joins/Merges the string contents of the current string builder with that on the specified string builder at the specified position
+METHOD Join : I_StringBuilder
+VAR_INPUT
+	Position : T_Size;
+	ipString_Builder : I_StringBuilder;
+END_VAR
+VAR
+	pTemp : POINTER TO BYTE;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Join := THIS^;
+IF ipString_Builder = 0 THEN RETURN; END_IF
+ipString_Builder.GetBuffer(pTemp);
+THIS^.InsertBuffer(Position, pTemp);
+CASE Tc2_System.F_CheckMemoryArea(pTemp, 1) OF 
+	E_TcMemoryArea.Dynamic: __DELETE(pTemp);
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="Length" Id="{42ee92eb-6db1-44ae-878f-3eb5c5f39c6c}">
+      <Declaration><![CDATA[// Current size of string builder contents
+PROPERTY Length : T_Size]]></Declaration>
+      <Get Name="Get" Id="{fe15fef6-4a27-449f-8986-a39081f27e7c}">
+        <Declaration><![CDATA[VAR
+	i : UDINT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Length := THIS^._Length;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{7731a0b4-0ff8-414a-a7ad-09cc142375d9}">
+        <Declaration><![CDATA[PROTECTED 
+VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[THIS^._Length := Length;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="LTrim" Id="{4df3ac1a-8e0e-4e50-b32f-ac510ccc12c1}">
+      <Declaration><![CDATA[// Removes all ASCII white space (spaces, tabs, carriage returns, and linefeeds) from the beginning of string in the string builder
+METHOD LTrim : I_StringBuilder
+VAR
+	Start, End, Length : T_Size := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[LTrim := THIS^;
+IF THIS^.Length = 0 THEN RETURN; END_IF
+End := THIS^.Length - 1;
+
+WHILE ((Start <= End) AND THIS^.Is_Space(THIS^._pBuffer^[Start])) DO Start := Start + 1; END_WHILE
+
+Length := end - start + 1;
+F_MemMove(THIS^._pBuffer, ADR(THIS^._pBuffer^[Start]), Length);
+THIS^.Length := Length;
+THIS^._pBuffer^[THIS^.Length] := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Malloc" Id="{a88316a6-1528-4842-9841-0f6d45c046b9}" FolderPath="Protected\">
+      <Declaration><![CDATA[// Allocates memory on the heap for a string of defined size
+METHOD PROTECTED Malloc : POINTER TO STRING
+VAR_INPUT
+	Size : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Malloc := __NEW(BYTE, TO_UDINT(Size));]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Remove" Id="{76f04ac2-7427-4649-af11-5e4b326e4f67}">
+      <Declaration><![CDATA[// Removes the characters in the string builder from specified position at specified length.+
+METHOD Remove : I_StringBuilder
+VAR_INPUT
+	Position, Length : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Remove := THIS^;
+IF Position + Length > THIS^.Length OR Position < 0 OR Length <= 0 OR Position > THIS^.Length THEN RETURN; END_IF
+F_MemMove(ADR(THIS^._pBuffer^[Position]), ADR(THIS^._pBuffer^[Position + Length]), THIS^.Length - (Position + Length) + 1);
+THIS^.Length := THIS^.Length - Length;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Replace" Id="{319dcc88-3e0c-48b4-bf59-3a020c9b84cb}">
+      <Declaration><![CDATA[// Replaces the instance of the old string in the string builder with the new string.
+// If bReplace_All = TRUE, all instances of the old string are placed, else only the first instance.
+METHOD Replace : I_StringBuilder
+VAR_INPUT
+	sOld_Value,
+	sNew_Value : T_LongString;
+	bReplace_All : BOOL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Replace := THIS^.ReplaceAny(sOld_Value,sNew_Value, bReplace_All);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ReplaceAny" Id="{3a55c232-be68-40d3-aae3-79b945f2fdb3}">
+      <Declaration><![CDATA[// Replaces the instance of the old value in the string builder with the new value.
+// If bReplace_All = TRUE, all instances of the old value are placed, else only the first instance.
+METHOD ReplaceAny : I_StringBuilder
+VAR_INPUT
+	Old_Value : ANY;
+	New_Value : ANY;
+	bReplace_All : BOOL;
+END_VAR
+VAR
+	Position, 
+	Old_Str_Len,
+	New_Str_len : T_Size;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ReplaceAny := THIS^;
+IF NOT(F_IsAnyToStringCompatable(Old_Value)) OR_ELSE NOT(F_IsAnyToStringCompatable(New_Value)) THEN RETURN; END_IF
+
+Old_Str_Len := F_AnyStringLength(Old_Value);
+New_Str_Len := F_AnyStringLength(New_Value);
+
+WHILE Position < THIS^.Length DO
+	THIS^.SearchAny(Old_Value, Position, Position => Position);
+	THIS^.Remove(Position, Old_Str_Len);
+	THIS^.InsertAny(Position, New_Value);
+	IF NOT bReplace_All OR Position < 0 THEN EXIT; END_IF
+	Position := Position + New_Str_Len;
+	END_WHILE
+	
+
+
+
+
+
+
+ ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reserve" Id="{20490fb2-0dc3-481b-b6b6-14608ad46bd6}" FolderPath="Protected\">
+      <Declaration><![CDATA[METHOD PROTECTED Reserve
+VAR_INPUT
+	Capacity : T_Size;
+END_VAR
+VAR
+	pTemp : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF Capacity <= THIS^.Capacity THEN RETURN; END_IF
+pTemp := THIS^.Malloc(Capacity);
+F_StrLCpy(pTemp, THIS^._pBuffer, Capacity);
+THIS^.Free();
+THIS^._pBuffer := pTemp;
+THIS^.Capacity := Capacity;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Reverse" Id="{230c981c-7bc4-4cc1-81a8-f260fa2c7145}">
+      <Declaration><![CDATA[// Reverses the string contents in the string builder
+METHOD Reverse : I_StringBuilder
+VAR
+	i : T_Size;
+	nTemp : BYTE;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Reverse := THIS^;
+IF THIS^.Length <= 0 THEN RETURN; END_IF
+FOR i := 0 TO (THIS^.Length/2)-1 DO
+	nTemp := THIS^._pBuffer^[i];
+	THIS^._pBuffer^[i] := THIS^._pBuffer^[THIS^.Length - i - 1];
+	THIS^._pBuffer^[THIS^.Length - i - 1] := nTemp;
+	END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RTrim" Id="{0abf2bf8-662e-4545-9933-322af8689797}">
+      <Declaration><![CDATA[// Removes all ASCII white space (spaces, tabs, carriage returns, and linefeeds) from the end of string in the string builder
+METHOD RTrim : I_StringBuilder
+VAR
+	Start, End, Length : T_Size := 0;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RTrim := THIS^;
+IF THIS^.Length = 0 THEN RETURN; END_IF
+End := THIS^.Length - 1;
+
+WHILE ((End >= Start) AND THIS^.Is_Space(THIS^._pBuffer^[End])) DO End := End  - 1; END_WHILE
+
+Length := end - start + 1;
+F_MemMove(THIS^._pBuffer, ADR(THIS^._pBuffer^[Start]), Length);
+THIS^.Length := Length;
+THIS^._pBuffer^[THIS^.Length] := 0;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Search" Id="{38591f35-eb58-43a1-803d-68119051cbc2}">
+      <Declaration><![CDATA[// Finds the position of the first instance of a given string in the content's of the string builder from a starting position
+METHOD Search : I_StringBuilder
+VAR_INPUT
+	sValue : T_LongString;
+	Start_Position : T_Size;
+END_VAR
+VAR_OUTPUT
+	Position : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Search := THIS^.SearchAny(sValue,Start_Position, Position => Position);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="SearchAny" Id="{ab6ebf17-ea26-4de6-8473-c7633d94ec15}">
+      <Declaration><![CDATA[// Finds the position of the first instance of a given value in the content's of the string builder from a starting position
+METHOD SearchAny : I_StringBuilder
+VAR_INPUT
+	Value : ANY;
+	Start_Position : T_Size;
+END_VAR
+VAR_OUTPUT
+	Position : T_Size := -1;
+END_VAR
+VAR
+	bMalloced : BOOL := TRUE;
+	Str_Len : T_Size;
+	pValue, pLoc : POINTER TO STRING;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SearchAny := THIS^;
+IF Start_Position < 0 OR Start_Position > THIS^.Length - 1 THEN RETURN; END_IF
+CASE Value.TypeClass OF
+	__SYSTEM.TYPE_CLASS.TYPE_STRING: 
+		pValue := Value.pValue;
+		bMalloced := FALSE;
+		
+	__SYSTEM.TYPE_CLASS.TYPE_WSTRING:
+		Str_Len := TO_DINT(Tc2_Utilities.WLEN2(Value.pValue));
+		pValue := THIS^.Malloc(Str_Len + 1);
+		Tc2_Utilities.WSTRING_TO_STRING2(pValue, Value.pValue, TO_UDINT(Str_Len));
+		
+	__SYSTEM.TYPE_CLASS.TYPE_BOOL,
+	__SYSTEM.TYPE_CLASS.TYPE_BYTE,
+	__SYSTEM.TYPE_CLASS.TYPE_WORD,
+	__SYSTEM.TYPE_CLASS.TYPE_DWORD,
+	__SYSTEM.TYPE_CLASS.TYPE_LWORD,
+	__SYSTEM.TYPE_CLASS.TYPE_SINT,
+	__SYSTEM.TYPE_CLASS.TYPE_INT,
+	__SYSTEM.TYPE_CLASS.TYPE_DINT,
+	__SYSTEM.TYPE_CLASS.TYPE_LINT,
+	__SYSTEM.TYPE_CLASS.TYPE_USINT,
+	__SYSTEM.TYPE_CLASS.TYPE_UINT,
+	__SYSTEM.TYPE_CLASS.TYPE_UDINT,
+	__SYSTEM.TYPE_CLASS.TYPE_ULINT,
+	__SYSTEM.TYPE_CLASS.TYPE_REAL,
+	__SYSTEM.TYPE_CLASS.TYPE_LREAL,
+	__SYSTEM.TYPE_CLASS.TYPE_TIME,
+	__SYSTEM.TYPE_CLASS.TYPE_LTIME,
+	__SYSTEM.TYPE_CLASS.TYPE_DATE,
+	__SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME,
+	__SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY,
+	__SYSTEM.TYPE_CLASS.TYPE_POINTER:
+		pValue := THIS^.Malloc(SIZEOF(T_LongString));
+		pValue^ := F_AnyToString(Value);
+ELSE
+	RETURN;
+END_CASE
+pLoc := F_StrStr(ADR(THIS^._pBuffer^[Start_Position]), pValue);
+IF bMalloced THEN __DELETE(pValue); END_IF
+IF pLoc = 0 THEN RETURN; END_IF
+Position := TO_DINT(pLoc - THIS^._pBuffer);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Split" Id="{4a618ce1-9fc5-46aa-bd25-d7a2c05a8ab9}">
+      <Declaration><![CDATA[// Appends selected characters from the current string builder to the selected string builder
+METHOD Split : I_StringBuilder
+VAR_INPUT
+	Position, Length : T_Size;
+	ipStringBuilder : I_StringBuilder;
+END_VAR
+VAR
+	Char : T_Char;
+	i, End_Position : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Split := THIS^;
+IF ipStringBuilder = 0 THEN RETURN; END_IF
+IF (Position > THIS^.Length) OR_ELSE (Length <= 0) OR_ELSE (THIS^.Length = 0) THEN RETURN; END_IF
+End_Position := Position + Length;
+IF End_Position > THIS^.Length THEN End_Position := THIS^.Length; END_IF
+
+FOR i := Position TO End_Position - 1 DO
+	Char[0] := THIS^._pBuffer^[i];
+	ipStringBuilder.Append(Char);
+	END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="StrinkToFit" Id="{0335a2b7-1853-42a3-854f-56422bd5149a}">
+      <Declaration><![CDATA[// Reduces the capacity of the string builder to match the size of its contents, potentially reducing memory usage.
+METHOD StrinkToFit : I_StringBuilder
+VAR
+	pTemp : POINTER TO STRING;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[StrinkToFit := THIS^;
+IF THIS^.Capacity > (THIS^.Length + 1) THEN
+	pTemp := THIS^.Malloc(THIS^.Length + 1);
+	F_StrLCpy(pTemp, THIS^._pBuffer, THIS^.Length + 1);
+	THIS^.Free();
+	THIS^._pBuffer := pTemp;
+	THIS^.Capacity := THIS^.Length + 1;
+	END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToLowercase" Id="{a1fcd3aa-8fa4-4184-b06b-5118ba2c163f}">
+      <Declaration><![CDATA[// Converts all alphabetic characters in string builder to lowercase characters
+METHOD ToLowercase : I_StringBuilder
+VAR
+	i : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToLowercase := THIS^;
+IF THIS^.Length = 0 THEN RETURN; END_IF
+FOR i := 0 TO THIS^.Length - 1 DO 
+	IF THIS^._pBuffer^[i] >= 65 AND THIS^._pBuffer^[i]<= 90 THEN 
+		THIS^._pBuffer^[i] := THIS^._pBuffer^[i] + 32; 
+		END_IF
+	END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="ToUppercase" Id="{bf56b332-7403-4ffc-afda-d2a8ff11b9af}">
+      <Declaration><![CDATA[// Converts all alphabetic characters in string builder to uppercase characters
+METHOD ToUppercase : I_StringBuilder
+VAR
+	i : T_Size;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[ToUppercase := THIS^;
+IF THIS^.Length = 0 THEN RETURN; END_IF
+FOR i := 0 TO THIS^.Length - 1 DO 
+	IF THIS^._pBuffer^[i] >= 97 AND THIS^._pBuffer^[i]<= 122 THEN 
+		THIS^._pBuffer^[i] := THIS^._pBuffer^[i] - 32; 
+		END_IF
+	END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_StringBuilder">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Append">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.AppendAny">
+      <LineId Id="301" Count="46" />
+      <LineId Id="33" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.AppendBuffer">
+      <LineId Id="8" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.AppendLine">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.BTrim">
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="14" Count="3" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Capacity.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Capacity.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Clear">
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.CopySubstringTo">
+      <LineId Id="174" Count="16" />
+      <LineId Id="37" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.CopyTo">
+      <LineId Id="63" Count="8" />
+      <LineId Id="30" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Free">
+      <LineId Id="5" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.GetBuffer">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.GetCapacity">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.GetChar">
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.GetEnumerator">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.GetLength">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.GetString">
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.GetSubstring">
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Insert">
+      <LineId Id="15" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.InsertAny">
+      <LineId Id="313" Count="48" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.InsertBuffer">
+      <LineId Id="15" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="33" Count="6" />
+      <LineId Id="32" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Is_Space">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Join">
+      <LineId Id="5" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="30" Count="2" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Length.Get">
+      <LineId Id="8" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Length.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.LTrim">
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="14" Count="3" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Malloc">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Remove">
+      <LineId Id="30" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="31" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Replace">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.ReplaceAny">
+      <LineId Id="181" Count="19" />
+      <LineId Id="68" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Reserve">
+      <LineId Id="25" Count="4" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Reverse">
+      <LineId Id="5" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="21" Count="1" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.RTrim">
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="16" Count="1" />
+      <LineId Id="12" Count="3" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Search">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.SearchAny">
+      <LineId Id="182" Count="40" />
+      <LineId Id="112" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.Split">
+      <LineId Id="47" Count="8" />
+      <LineId Id="26" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.StrinkToFit">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.ToLowercase">
+      <LineId Id="6" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="12" Count="3" />
+      <LineId Id="11" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_StringBuilder.ToUppercase">
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

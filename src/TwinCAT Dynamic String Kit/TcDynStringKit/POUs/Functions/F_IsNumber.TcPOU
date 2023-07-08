@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_IsNumber" Id="{eae0b218-bf9a-43c4-930f-13beab306f4e}" SpecialFunc="None">
+    <Declaration><![CDATA[// Checks is a string is a number
+FUNCTION F_IsNumber : BOOL
+VAR_INPUT
+	sValue : REFERENCE TO STRING;
+END_VAR
+VAR
+	i : T_Size;
+	bHasDigits, bHasDecimal, bHasExponent : BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF F_ByteToChar(sValue[0]) = '+' OR_ELSE F_ByteToChar(sValue[0]) = '-' THEN i := i + 1; END_IF
+IF NOT F_IsDigit(F_ByteToChar(sValue[0])) THEN RETURN; END_IF
+WHILE F_IsSpace(F_ByteToChar(sValue[i])) DO i := i + 1; END_WHILE
+WHILE sValue[i] <> 0 DO
+	IF F_IsDigit(F_ByteToChar(sValue[i])) THEN 
+		bHasDigits := TRUE;
+	ELSIF F_ByteToChar(sValue[i]) = '.' THEN
+		IF bHasDecimal THEN RETURN; END_IF
+		bHasDecimal := TRUE;
+	ELSIF F_ByteToChar(sValue[i]) = 'E' OR_ELSE F_ByteToChar(sValue[i]) = 'e' THEN
+		IF bHasExponent THEN RETURN; END_IF
+		IF F_ByteToChar(sValue[i+1]) = '+' OR_ELSE F_ByteToChar(sValue[i+1]) = '-' THEN i := i + 1; END_IF
+		bHasExponent := TRUE;
+	ELSE
+		RETURN; 
+		END_IF
+	i := i + 1; 
+	END_WHILE
+
+IF NOT bHasDigits THEN RETURN; END_IF
+F_IsNumber := TRUE;]]></ST>
+    </Implementation>
+    <LineIds Name="F_IsNumber">
+      <LineId Id="154" Count="19" />
+      <LineId Id="40" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

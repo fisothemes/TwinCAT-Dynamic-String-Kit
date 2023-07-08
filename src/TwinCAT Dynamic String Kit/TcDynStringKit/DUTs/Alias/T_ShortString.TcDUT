@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <DUT Name="T_ShortString" Id="{26118e4f-060a-49c3-9e5e-6a6f465fb48a}">
+    <Declaration><![CDATA[TYPE T_ShortString : STRING(Param_Configurations.ShortStringSize); END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

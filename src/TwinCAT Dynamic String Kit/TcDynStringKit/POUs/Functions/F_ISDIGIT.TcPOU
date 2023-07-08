@@ -1,16 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_ISDIGIT" Id="{096fc1e7-8253-4366-8b9d-f2db44130b22}" SpecialFunc="None">
+  <POU Name="F_IsDigit" Id="{096fc1e7-8253-4366-8b9d-f2db44130b22}" SpecialFunc="None">
     <Declaration><![CDATA[// Checks if a character is a digit
-FUNCTION F_ISDIGIT : BOOL
+FUNCTION F_IsDigit : BOOL
 VAR_INPUT
 	Char : T_Char;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_ISDIGIT := Char >= '0' AND Char <= '9';]]></ST>
+      <ST><![CDATA[F_IsDigit := Char >= '0' AND Char <= '9';]]></ST>
     </Implementation>
-    <LineIds Name="F_ISDIGIT">
+    <LineIds Name="F_IsDigit">
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>

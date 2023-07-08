@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="F_IsSignedInteger" Id="{53f0e721-cef1-4e7f-9775-68c2ea9fe311}" SpecialFunc="None">
+    <Declaration><![CDATA[// Checks if a string is a signed integer
+FUNCTION F_IsSignedInteger : BOOL
+VAR_INPUT
+	sValue : REFERENCE TO STRING;
+END_VAR
+VAR
+	i : T_Size;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF F_ByteToChar(sValue[0]) = '+' OR_ELSE F_ByteToChar(sValue[0]) = '-' THEN i := i + 1; END_IF
+IF NOT F_IsDigit(F_ByteToChar(sValue[i])) THEN RETURN; END_IF
+WHILE F_IsSpace(F_ByteToChar(sValue[i])) DO i := i + 1; END_WHILE
+WHILE F_IsDigit(F_ByteToChar(sValue[i])) DO i := i + 1; END_WHILE
+F_IsSignedInteger := sValue[i] = 0;]]></ST>
+    </Implementation>
+    <LineIds Name="F_IsSignedInteger">
+      <LineId Id="66" Count="3" />
+      <LineId Id="19" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

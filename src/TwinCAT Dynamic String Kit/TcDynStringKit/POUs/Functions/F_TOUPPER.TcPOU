@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_TOUPPER" Id="{f6d5a607-3f58-4a60-959f-aa50bc9b18aa}" SpecialFunc="None">
+  <POU Name="F_ToUpper" Id="{f6d5a607-3f58-4a60-959f-aa50bc9b18aa}" SpecialFunc="None">
     <Declaration><![CDATA[// Converts all alphabetic characters in a string uppercase characters
-FUNCTION F_TOUPPER
+FUNCTION F_ToUpper
 VAR_INPUT
 	sValue : REFERENCE TO STRING; // String of any size
 END_VAR
@@ -15,7 +15,7 @@ END_VAR]]></Declaration>
 	i := i + 1;
 	END_WHILE]]></ST>
     </Implementation>
-    <LineIds Name="F_TOUPPER">
+    <LineIds Name="F_ToUpper">
       <LineId Id="7" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="17" Count="0" />

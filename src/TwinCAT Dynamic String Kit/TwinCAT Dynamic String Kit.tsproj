@@ -32,6 +32,18 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
+			<Project GUID="{EDC200F5-6521-48BC-B1DF-8F0CD4B639A1}" Name="TcDynStringKitTest" PrjFilePath="TcDynStringKitTest\TcDynStringKitTest.plcproj" TmcFilePath="TcDynStringKitTest\TcDynStringKitTest.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e" SymbolicMapping="true">
+				<Instance Id="#x08502040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="TcDynStringKitTest\TcDynStringKitTest.tmc">
+					<Name>TcDynStringKitTest Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Contexts>
+						<Context>
+							<Id>1</Id>
+							<Name>Default</Name>
+						</Context>
+					</Contexts>
+				</Instance>
+			</Project>
 		</Plc>
 	</Project>
 </TcSmProject>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="P_AdapterExample" Id="{c8f6b2a2-2a33-4cec-9fdf-2a33389249e0}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM INTERNAL P_AdapterExample
+VAR
+	bStart				: BOOL;
+	sValue 				: STRING(255);
+	nPos				: T_Size;
+	tTime 				: TIME :=  TIME();
+	tTime2				: TIME;
+	fbStringBuilder 	: FB_StringBuilder;
+	fbReadOnlySB 		: FB_ReadOnlyStringBuilderAdapter;
+	ipReadOnlySB 		: I_ReadOnlyStringBuilderAdapter;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbReadOnlySB(ipStringBuilder := fbStringBuilder);
+ipReadOnlySB := fbReadOnlySB;
+
+IF bStart THEN
+	bStart := FALSE;
+	fbStringBuilder
+		.Clear()
+		.Append('   I love cats.')
+		.Append('The time is: ').AppendAny(tTime).Append('.')
+		.Append('   ')
+		.BTrim();
+	END_IF
+
+sValue := ipReadOnlySB
+			.Search('T#', 0, Position => nPos)
+			.CopySubstringTo(nPos, tc2_Standard.LEN(TO_STRING(tTime)), tTime2)
+			.GetString();]]></ST>
+    </Implementation>
+    <LineIds Name="P_AdapterExample">
+      <LineId Id="173" Count="5" />
+      <LineId Id="199" Count="0" />
+      <LineId Id="179" Count="1" />
+      <LineId Id="188" Count="0" />
+      <LineId Id="187" Count="0" />
+      <LineId Id="182" Count="4" />
+      <LineId Id="66" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

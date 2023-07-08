@@ -15,45 +15,53 @@
     <Implicit_KindOfTask>{a5dadf37-0e2d-41fb-9718-a5e861fd494e}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{76c5f3b1-a59d-4c82-9f99-165c8433355b}</Implicit_Jitter_Distribution>
     <LibraryReferences>{94504b01-9442-4fd9-8ce9-45b44800d9c4}</LibraryReferences>
+    <Company>FisoThemes</Company>
+    <Released>false</Released>
+    <Title>TwinCAT Dynamic String Kit</Title>
+    <ProjectVersion>1.0.1.1</ProjectVersion>
+    <DefaultNamespace>TcDynStringKit</DefaultNamespace>
+    <CombineIds>true</CombineIds>
+    <Author>Goodwill Mzumala</Author>
+    <Description>A library that provides tools for working with dynamic strings in TwinCAT.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\Alias\T_Query_Interface.TcDUT">
+    <Compile Include="DUTs\Alias\T_QueryInterface.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Alias\T_Short_String.TcDUT">
+    <Compile Include="DUTs\Alias\T_ShortString.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Alias\T_Char.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Alias\T_Long_String.TcDUT">
+    <Compile Include="DUTs\Alias\T_LongString.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="DUTs\Alias\T_Size.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Alias\T_Whitespace_Location.TcDUT">
+    <Compile Include="DUTs\Alias\T_WhitespaceLocation.TcDUT">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="DUTs\Enums\E_WHITESPACE_LOCATION.TcTLEO">
+    <Compile Include="DUTs\Enums\E_WhitespaceLocation.TcTLEO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ITFs\Adapters\I_Read_Only_Line_Builder_Adapter.TcIO">
+    <Compile Include="ITFs\Adapters\I_ReadOnlyLineBuilderAdapter.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ITFs\Adapters\I_Read_Only_String_Builder_Adapter.TcIO">
+    <Compile Include="ITFs\Adapters\I_ReadOnlyStringBuilderAdapter.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ITFs\Adapters\I_Read_Only_Word_Builder_Adapter.TcIO">
+    <Compile Include="ITFs\Adapters\I_ReadOnlyWordBuilderAdapter.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ITFs\Builders\I_Line_Builder.TcIO">
+    <Compile Include="ITFs\Builders\I_LineBuilder.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ITFs\Builders\I_String_Builder.TcIO">
+    <Compile Include="ITFs\Builders\I_StringBuilder.TcIO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ITFs\Builders\I_Word_Builder.TcIO">
+    <Compile Include="ITFs\Builders\I_WordBuilder.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ITFs\Enumerators\I_Disposable.TcIO">
@@ -65,112 +73,131 @@
     <Compile Include="ITFs\Enumerators\I_Enumerator.TcIO">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="PARAMs\GVLs\Param_Configurations.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Examples\P_Enumerator_Example.TcPOU">
+    <Compile Include="POUs\Examples\P_EnumeratorExample.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Examples\P_Adapter_Example.TcPOU">
+    <Compile Include="POUs\Examples\P_AdapterExample.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Examples\P_Builder_Example.TcPOU">
+    <Compile Include="POUs\Examples\P_StringBuilderExample.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Adapters\FB_Read_Only_String_Builder_Adapter.TcPOU">
+    <Compile Include="POUs\Function Blocks\Adapters\FB_ReadOnlyStringBuilderAdapter.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Builders\FB_String_Builder.TcPOU">
+    <Compile Include="POUs\Function Blocks\Builders\FB_StringBuilder.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Enumerators\FB_String_Builder_Enumerator.TcPOU">
+    <Compile Include="POUs\Function Blocks\Enumerators\FB_StringBuilderEnumerator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Enumerators\FB_String_Enumerator_Base.TcPOU">
+    <Compile Include="POUs\Function Blocks\Enumerators\FB_AbstractStringEnumerator.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Function Blocks\Internal\FB_Free.TcPOU">
+    <Compile Include="POUs\Function Blocks\_Internal\FB_Free.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ANYSTRLEN.TcPOU">
+    <Compile Include="POUs\Functions\F_AnyStringLength.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ANYTOSTR.TcPOU">
+    <Compile Include="POUs\Functions\F_AnyToString.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_CHARTOBYTE.TcPOU">
+    <Compile Include="POUs\Functions\F_CharToByte.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISBOOL.TcPOU">
+    <Compile Include="POUs\Functions\F_IsBool.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISDIGIT.TcPOU">
+    <Compile Include="POUs\Functions\F_IsDigit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISNUM.TcPOU">
+    <Compile Include="POUs\Functions\F_IsNumber.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISTIME.TcPOU">
+    <Compile Include="POUs\Functions\F_IsTime.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISLTIME.TcPOU">
+    <Compile Include="POUs\Functions\F_IsLTime.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISUNSIGNEDINT.TcPOU">
+    <Compile Include="POUs\Functions\F_IsUnsignedInteger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISSIGNEDINT.TcPOU">
+    <Compile Include="POUs\Functions\F_IsSignedInteger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_MALLOCSTR.TcPOU">
+    <Compile Include="POUs\Functions\F_MallocStr.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_STRNCMP.TcPOU">
+    <Compile Include="POUs\Functions\F_StrNCmp.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_STRTOANY.TcPOU">
+    <Compile Include="POUs\Functions\F_StrToAny.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISANYSTRCOMPAT.TcPOU">
+    <Compile Include="POUs\Functions\F_IsAnyToStringCompatable.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_ISSPACE.TcPOU">
+    <Compile Include="POUs\Functions\F_IsSpace.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_MEMCPY.TcPOU">
+    <Compile Include="POUs\Functions\F_MemCpy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_MEMMOVE.TcPOU">
+    <Compile Include="POUs\Functions\F_MemMove.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_String_Builder.TcPOU">
+    <Compile Include="POUs\Functions\F_StringBuilder.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_STRLCAT.TcPOU">
+    <Compile Include="POUs\Functions\F_StrLCat.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_STRLCPY.TcPOU">
+    <Compile Include="POUs\Functions\F_StrLCpy.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_STRLEN.TcPOU">
+    <Compile Include="POUs\Functions\F_StrLen.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_STRSTR.TcPOU">
+    <Compile Include="POUs\Functions\F_StrStr.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_BYTETOCHAR.TcPOU">
+    <Compile Include="POUs\Functions\F_ByteToChar.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_TOUPPER.TcPOU">
+    <Compile Include="POUs\Functions\F_ToUpper.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_TOLOWER.TcPOU">
+    <Compile Include="POUs\Functions\F_ToLower.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\Functions\F_TRIMWHITESPACE.TcPOU">
+    <Compile Include="POUs\Functions\F_TrimWhiteSpace.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Project Information\F_GetCompany.TcPOU">
+      <SubType>Code</SubType>
+      <SystemCall>true</SystemCall>
+    </Compile>
+    <Compile Include="Project Information\F_GetTitle.TcPOU">
+      <SubType>Code</SubType>
+      <SystemCall>true</SystemCall>
+    </Compile>
+    <Compile Include="Project Information\F_GetVersion.TcPOU">
+      <SubType>Code</SubType>
+      <SystemCall>true</SystemCall>
+    </Compile>
+    <Compile Include="Version\Global_Version.TcGVL">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -180,18 +207,21 @@
     <Folder Include="DUTs\Enums" />
     <Folder Include="DUTs\Unions" />
     <Folder Include="DUTs\Structs" />
-    <Folder Include="GVLs" />
     <Folder Include="ITFs" />
     <Folder Include="ITFs\Adapters" />
     <Folder Include="ITFs\Builders" />
     <Folder Include="ITFs\Enumerators" />
-    <Folder Include="POUs\Function Blocks\Internal" />
+    <Folder Include="PARAMs" />
+    <Folder Include="PARAMs\GVLs" />
+    <Folder Include="POUs\Function Blocks\_Internal" />
     <Folder Include="POUs\Function Blocks\Builders" />
     <Folder Include="POUs\Function Blocks\Adapters" />
     <Folder Include="POUs\Function Blocks\Enumerators" />
     <Folder Include="POUs\Functions" />
     <Folder Include="POUs\Function Blocks" />
     <Folder Include="POUs\Examples" />
+    <Folder Include="Project Information" />
+    <Folder Include="Version" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -224,7 +254,36 @@
         <Data>
           <o xml:space="preserve" t="OptionKey">
       <v n="Name">"&lt;ProjectRoot&gt;"</v>
-      <d n="SubKeys" t="Hashtable" />
+      <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+        <v>{192FAD59-8248-4824-A8DE-9177C94C195A}</v>
+        <o>
+          <v n="Name">"{192FAD59-8248-4824-A8DE-9177C94C195A}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{29BD8D0C-3586-4548-BB48-497B9A01693F}</v>
+        <o>
+          <v n="Name">"{29BD8D0C-3586-4548-BB48-497B9A01693F}"</v>
+          <d n="SubKeys" t="Hashtable" ckt="String" cvt="OptionKey">
+            <v>Rules</v>
+            <o>
+              <v n="Name">"Rules"</v>
+              <d n="SubKeys" t="Hashtable" />
+              <d n="Values" t="Hashtable" />
+            </o>
+          </d>
+          <d n="Values" t="Hashtable" />
+        </o>
+        <v>{40450F57-0AA3-4216-96F3-5444ECB29763}</v>
+        <o>
+          <v n="Name">"{40450F57-0AA3-4216-96F3-5444ECB29763}"</v>
+          <d n="SubKeys" t="Hashtable" />
+          <d n="Values" t="Hashtable" ckt="String" cvt="String">
+            <v>ActiveVisuProfile</v>
+            <v>IR0whWr8bwfwBwAAiD2qpQAAAABVAgAA37x72QAAAAABAAAAAAAAAAEaUwB5AHMAdABlAG0ALgBTAHQAcgBpAG4AZwACTHsAZgA5ADUAYgBiADQAMgA2AC0ANQA1ADIANAAtADQAYgA0ADUALQA5ADQAMAAwAC0AZgBiADAAZgAyAGUANwA3AGUANQAxAGIAfQADCE4AYQBtAGUABDBUAHcAaQBuAEMAQQBUACAAMwAuADEAIABCAHUAaQBsAGQAIAA0ADAAMgA0AC4ANwAFFlAAcgBvAGYAaQBsAGUARABhAHQAYQAGTHsAMQA2AGUANQA1AGIANgAwAC0ANwAwADQAMwAtADQAYQA2ADMALQBiADYANQBiAC0ANgAxADQANwAxADMAOAA3ADgAZAA0ADIAfQAHEkwAaQBiAHIAYQByAGkAZQBzAAhMewAzAGIAZgBkADUANAA1ADkALQBiADAANwBmAC0ANABkADYAZQAtAGEAZQAxAGEALQBhADgAMwAzADUANgBhADUANQAxADQAMgB9AAlMewA5AGMAOQA1ADgAOQA2ADgALQAyAGMAOAA1AC0ANAAxAGIAYgAtADgAOAA3ADEALQA4ADkANQBmAGYAMQBmAGUAZABlADEAYQB9AAoOVgBlAHIAcwBpAG8AbgALBmkAbgB0AAwKVQBzAGEAZwBlAA0KVABpAHQAbABlAA4aVgBpAHMAdQBFAGwAZQBtAE0AZQB0AGUAcgAPDkMAbwBtAHAAYQBuAHkAEAxTAHkAcwB0AGUAbQARElYAaQBzAHUARQBsAGUAbQBzABIwVgBpAHMAdQBFAGwAZQBtAHMAUwBwAGUAYwBpAGEAbABDAG8AbgB0AHIAbwBsAHMAEyhWAGkAcwB1AEUAbABlAG0AcwBXAGkAbgBDAG8AbgB0AHIAbwBsAHMAFCRWAGkAcwB1AEUAbABlAG0AVABlAHgAdABFAGQAaQB0AG8AcgAVIlYAaQBzAHUATgBhAHQAaQB2AGUAQwBvAG4AdAByAG8AbAAWFHYAaQBzAHUAaQBuAHAAdQB0AHMAFwxzAHkAcwB0AGUAbQAYGFYAaQBzAHUARQBsAGUAbQBCAGEAcwBlABkmRABlAHYAUABsAGEAYwBlAGgAbwBsAGQAZQByAHMAVQBzAGUAZAAaCGIAbwBvAGwAGyJQAGwAdQBnAGkAbgBDAG8AbgBzAHQAcgBhAGkAbgB0AHMAHEx7ADQAMwBkADUAMgBiAGMAZQAtADkANAAyAGMALQA0ADQAZAA3AC0AOQBlADkANAAtADEAYgBmAGQAZgAzADEAMABlADYAMwBjAH0AHRxBAHQATABlAGEAcwB0AFYAZQByAHMAaQBvAG4AHhRQAGwAdQBnAGkAbgBHAHUAaQBkAB8WUwB5AHMAdABlAG0ALgBHAHUAaQBkACBIYQBmAGMAZAA1ADQANAA2AC0ANAA5ADEANAAtADQAZgBlADcALQBiAGIANwA4AC0AOQBiAGYAZgBlAGIANwAwAGYAZAAxADcAIRRVAHAAZABhAHQAZQBJAG4AZgBvACJMewBiADAAMwAzADYANgBhADgALQBiADUAYwAwAC0ANABiADkAYQAtAGEAMAAwAGUALQBlAGIAOAA2ADAAMQAxADEAMAA0AGMAMwB9ACMOVQBwAGQAYQB0AGUAcwAkTHsAMQA4ADYAOABmAGYAYwA5AC0AZQA0AGYAYwAtADQANQAzADIALQBhAGMAMAA2AC0AMQBlADMAOQBiAGIANQA1ADcAYgA2ADkAfQAlTHsAYQA1AGIAZAA0ADgAYwAzAC0AMABkADEANwAtADQAMQBiADUALQBiADEANgA0AC0ANQBmAGMANgBhAGQAMgBiADkANgBiADcAfQAmFk8AYgBqAGUAYwB0AHMAVAB5AHAAZQAnVFUAcABkAGEAdABlAEwAYQBuAGcAdQBhAGcAZQBNAG8AZABlAGwARgBvAHIAQwBvAG4AdgBlAHIAdABpAGIAbABlAEwAaQBiAHIAYQByAGkAZQBzACgQTABpAGIAVABpAHQAbABlACkUTABpAGIAQwBvAG0AcABhAG4AeQAqHlUAcABkAGEAdABlAFAAcgBvAHYAaQBkAGUAcgBzACs4UwB5AHMAdABlAG0ALgBDAG8AbABsAGUAYwB0AGkAbwBuAHMALgBIAGEAcwBoAHQAYQBiAGwAZQAsEnYAaQBzAHUAZQBsAGUAbQBzAC1INgBjAGIAMQBjAGQAZQAxAC0AZAA1AGQAYwAtADQAYQAzAGIALQA5ADAANQA0AC0AMgAxAGYAYQA3ADUANgBhADMAZgBhADQALihJAG4AdABlAHIAZgBhAGMAZQBWAGUAcgBzAGkAbwBuAEkAbgBmAG8AL0x7AGMANgAxADEAZQA0ADAAMAAtADcAZgBiADkALQA0AGMAMwA1AC0AYgA5AGEAYwAtADQAZQAzADEANABiADUAOQA5ADYANAAzAH0AMBhNAGEAagBvAHIAVgBlAHIAcwBpAG8AbgAxGE0AaQBuAG8AcgBWAGUAcgBzAGkAbwBuADIMTABlAGcAYQBjAHkAMzBMAGEAbgBnAHUAYQBnAGUATQBvAGQAZQBsAFYAZQByAHMAaQBvAG4ASQBuAGYAbwA0MEwAbwBhAGQATABpAGIAcgBhAHIAaQBlAHMASQBuAHQAbwBQAHIAbwBqAGUAYwB0ADUaQwBvAG0AcABhAHQAaQBiAGkAbABpAHQAeQDQAAIaA9ADAS0E0AUGGgfQBwgaAUUHCQjQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtDtAPAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAKAAAANAMC60BAAAA0A0BLRHQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0S0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAUAAAA0AwLrQIAAADQDQEtE9APAS0Q0AAJGgRFCgsEAwAAAAUAAAANAAAAAAAAANAMC60CAAAA0A0BLRTQDwEtENAACRoERQoLBAMAAAAFAAAADQAAAAAAAADQDAutAgAAANANAS0V0A8BLRDQAAkaBEUKCwQDAAAABQAAAA0AAAAAAAAA0AwLrQIAAADQDQEtFtAPAS0X0AAJGgRFCgsEAwAAAAUAAAANAAAAKAAAANAMC60EAAAA0A0BLRjQDwEtENAZGq0BRRscAdAAHBoCRR0LBAMAAAAFAAAADQAAAAAAAADQHh8tINAhIhoCRSMkAtAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAAAAANADAS0n0CgBLRHQKQEtENAAJRoFRQoLBAMAAAADAAAAAAAAAAoAAADQJgutAQAAANADAS0n0CgBLRHQKQEtEJoqKwFFAAEC0AABLSzQAAEtF9AAHy0t0C4vGgPQMAutAQAAANAxC60XAAAA0DIarQDQMy8aA9AwC60CAAAA0DELrQMAAADQMhqtANA0Gq0A0DUarQA=</v>
+          </d>
+        </o>
+      </d>
       <d n="Values" t="Hashtable" />
     </o>
         </Data>

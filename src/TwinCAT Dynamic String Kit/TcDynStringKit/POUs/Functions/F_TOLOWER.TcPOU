@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_TOLOWER" Id="{07aba59d-b3f8-4be4-952e-ac58e1ad8f3c}" SpecialFunc="None">
+  <POU Name="F_ToLower" Id="{07aba59d-b3f8-4be4-952e-ac58e1ad8f3c}" SpecialFunc="None">
     <Declaration><![CDATA[// Converts all alphabetic characters in a string lowercase characters
-FUNCTION F_TOLOWER
+FUNCTION F_ToLower
 VAR_INPUT
 	sValue : REFERENCE TO STRING; // String of any size
 END_VAR
@@ -15,7 +15,7 @@ END_VAR]]></Declaration>
 	i := i + 1;
 	END_WHILE]]></ST>
     </Implementation>
-    <LineIds Name="F_TOLOWER">
+    <LineIds Name="F_ToLower">
       <LineId Id="7" Count="0" />
       <LineId Id="15" Count="0" />
       <LineId Id="17" Count="0" />

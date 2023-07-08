@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_MALLOCSTR" Id="{c3d7e0b0-b075-4883-a6ee-a58ece1984ad}" SpecialFunc="None">
+  <POU Name="F_MallocStr" Id="{c3d7e0b0-b075-4883-a6ee-a58ece1984ad}" SpecialFunc="None">
     <Declaration><![CDATA[// Allocates memory on the heap for a string of defined size.
-FUNCTION F_MALLOCSTR : POINTER TO STRING
+FUNCTION F_MallocStr : POINTER TO STRING
 VAR_INPUT
 	Size : T_Size; // Size in bytes
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_MALLOCSTR := __NEW(BYTE, TO_UDINT(Size));]]></ST>
+      <ST><![CDATA[F_MallocStr := __NEW(BYTE, TO_UDINT(Size));]]></ST>
     </Implementation>
-    <LineIds Name="F_MALLOCSTR">
+    <LineIds Name="F_MallocStr">
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>

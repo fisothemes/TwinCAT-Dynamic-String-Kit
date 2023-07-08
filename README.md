@@ -9,12 +9,12 @@ Working with the string builder.
 **Declarations:** 
 ```ST
 VAR
-	bStart              : BOOL;
-	nLn1, nLn2          : T_Size;
-	sValue1, sValue2    : STRING(255);
-	pString             : POINTER TO STRING;
-	fbString_Builder1,
-	fbString_Builder2   : FB_String_Builder;
+	bStart 				: BOOL;
+	nLn1, nLn2 			: T_Size;
+	sValue1, sValue2	: STRING(255);
+	pString				: POINTER TO STRING;
+	fbStringBuilder1,
+	fbStringBuilder2	: FB_StringBuilder;
 END_VAR
 ```
 
@@ -22,27 +22,27 @@ END_VAR
 ```ST
 IF bStart THEN
 	bStart := FALSE;
-	fbString_Builder2
+	fbStringBuilder2
 		.Append(' I hate cats.')
-		.Get_Buffer(pString);
+		.GetBuffer(pString);
 	
-	fbString_Builder1
+	fbStringBuilder1
 		.Clear()
 		.Append(' I love cats.')
 		.Append(' I love dogs.')
-		.Append_Buffer(pString)
-		.Trim_Whitespace(T_Whitespace_Location.Both)
-		.Get_Length(Length => nLn1)
+		.AppendBuffer(pString)
+		.BTrim()
+		.GetLength(Length => nLn1)
 		.Replace('cats','dogs',TRUE)
 		.Insert(nLn1, ' Anaconda! ')
-		.Split(nLn1,100, fbString_Builder2.Append(' Tigers are cats.'))
-		.Get_Length(Length => nLn1);
+		.Split(nLn1,100, fbStringBuilder2.Append(' Tigers are cats.'))
+		.GetLength(Length => nLn1);
 	
-	sValue1 := fbString_Builder1.To_Upper_Case().Get_String();
-	sValue2 := fbString_Builder2
-				.To_Lower_Case()
-			   	.Trim_Whitespace(T_Whitespace_Location.Both)
-				.Get_String();
+	sValue1 := fbStringBuilder1.ToUppercase().GetString();
+	sValue2 := fbStringBuilder2
+		.ToLowercase()
+		.BTrim()
+		.GetString();
 	
 	nLn2 := Tc2_Standard.LEN(sValue1);
 	__DELETE(pString);
@@ -60,34 +60,36 @@ Working with the read-only adapter.
 **Declarations:** 
 ```ST
 VAR
-	bStart              : BOOL;
-	sValue              : STRING(255);
-	nPos, nLen          : T_Size;
-	tTime               : TIME :=  TIME();
-	tTime2              : TIME;
-	fbString_Builder    : FB_String_Builder;
-	fbRead_Only_SB      : FB_Read_Only_String_Builder_Adapter;
-	ipRead_Only_SB      : I_Read_Only_String_Builder_Adapter;
+	bStart				: BOOL;
+	sValue 				: STRING(255);
+	nPos				: T_Size;
+	tTime 				: TIME :=  TIME();
+	tTime2				: TIME;
+	fbStringBuilder 	: FB_StringBuilder;
+	fbReadOnlySB 		: FB_ReadOnlyStringBuilderAdapter;
+	ipReadOnlySB 		: I_ReadOnlyStringBuilderAdapter;
 END_VAR
 ```
 
 **Implementation:**
 ```ST
-fbRead_Only_SB(ipString_Builder := fbString_Builder);
-ipRead_Only_SB := fbRead_Only_SB;
+fbReadOnlySB(ipStringBuilder := fbStringBuilder);
+ipReadOnlySB := fbReadOnlySB;
 
 IF bStart THEN
 	bStart := FALSE;
-	fbString_Builder
+	fbStringBuilder
+		.Clear()
 		.Append('   I love cats.')
-		.Append('The time is: ').Append_Any(tTime).Append('.')
-		.Trim_Whitespace(T_Whitespace_Location.Both);
+		.Append('The time is: ').AppendAny(tTime).Append('.')
+		.Append('   ')
+		.BTrim();
 	END_IF
-	
-sValue := ipRead_Only_SB
+
+sValue := ipReadOnlySB
 			.Search('T#', 0, Position => nPos)
-			.Copy_Substring_To(nPos, tc2_Standard.LEN(TO_STRING(tTime2)), tTime2)
-			.Get_String();
+			.CopySubstringTo(nPos, tc2_Standard.LEN(TO_STRING(tTime)), tTime2)
+			.GetString();
 ```
 
 **Output:**
@@ -101,12 +103,12 @@ Working with the enumerator.
 **Declarations:** 
 ```ST
 VAR
-	bStart : BOOL;
-	sValue : STRING(255);
-	dtTime : DT :=  DT#2023-5-8-12:55:23;
-	fbString_Builder1,
-	fbString_Builder2 : FB_String_Builder;
-	ipEnumerator : I_Enumerator;
+	bStart				: BOOL;
+	sValue				: STRING(255);
+	dtTime				: DT :=  DT#2023-5-8-12:55:23;
+	fbStringBuilder1,
+	fbStringBuilder2	: FB_StringBuilder;
+	ipEnumerator		: I_Enumerator;
 END_VAR
 ```
 
@@ -115,18 +117,18 @@ END_VAR
 IF bStart THEN
 	bStart := FALSE;
 	
-	fbString_Builder1
+	fbStringBuilder1
 		.Clear()
 		.Append('   I love cats.')
-		.Append('The time is: ').Append_Any(dtTime).Append('.')
-		.Trim_Whitespace(T_Whitespace_Location.Both);
+		.Append('The time is: ').AppendAny(dtTime).Append('.')
+		.BTrim();
 	
-	ipEnumerator := fbString_Builder1.Get_Enumerator();
+	ipEnumerator := fbStringBuilder1.GetEnumerator();
 	WHILE ipEnumerator.Next() DO
-		fbString_Builder2.Append(ipEnumerator._Current);
+		fbStringBuilder2.Append(ipEnumerator.Current);
 		END_WHILE
 		
-	sValue := fbString_Builder2.Get_String();
+	sValue := fbStringBuilder2.GetString();
 	END_IF
 ```
 

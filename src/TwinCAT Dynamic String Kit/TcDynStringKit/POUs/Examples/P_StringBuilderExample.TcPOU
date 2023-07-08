@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
+  <POU Name="P_StringBuilderExample" Id="{2fdd4b37-7a62-43c0-8687-8617b0ce492e}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM INTERNAL P_StringBuilderExample
+VAR
+	bStart				: BOOL;
+	nLn1, nLn2			: T_Size;
+	sValue1, sValue2	: STRING(255);
+	pString				: POINTER TO STRING;
+	fbStringBuilder1,
+	fbStringBuilder2	: FB_StringBuilder;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bStart THEN
+	bStart := FALSE;
+	fbStringBuilder2
+		.Append(' I hate cats.')
+		.GetBuffer(pString);
+	
+	fbStringBuilder1
+		.Clear()
+		.Append(' I love cats.')
+		.Append(' I love dogs.')
+		.AppendBuffer(pString)
+		.BTrim()
+		.GetLength(Length => nLn1)
+		.Replace('cats','dogs',TRUE)
+		.Insert(nLn1, ' Anaconda! ')
+		.Split(nLn1,100, fbStringBuilder2.Append(' Tigers are cats.'))
+		.GetLength(Length => nLn1);
+	
+	sValue1 := fbStringBuilder1.ToUppercase().GetString();
+	sValue2 := fbStringBuilder2
+		.ToLowercase()
+		.BTrim()
+		.GetString();
+	
+	nLn2 := Tc2_Standard.LEN(sValue1);
+	__DELETE(pString);
+	END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="P_StringBuilderExample">
+      <LineId Id="124" Count="25" />
+      <LineId Id="13" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

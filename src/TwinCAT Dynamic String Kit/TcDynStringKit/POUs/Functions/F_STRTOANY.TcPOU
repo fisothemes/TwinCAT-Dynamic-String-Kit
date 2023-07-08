@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_STRTOANY" Id="{bcf1633a-b298-4d6c-9ca4-8a73f63bdec2}" SpecialFunc="None">
+  <POU Name="F_StrToAny" Id="{bcf1633a-b298-4d6c-9ca4-8a73f63bdec2}" SpecialFunc="None">
     <Declaration><![CDATA[// Converts string to any, returns TRUE if successful
-FUNCTION F_STRTOANY : BOOL
+FUNCTION F_StrToAny : BOOL
 VAR_INPUT
 	 Value : ANY;
-	 sValue : T_Long_String;
+	 sValue : T_LongString;
 END_VAR
 VAR	
 	pBool			: POINTER TO BOOL;
@@ -23,108 +23,108 @@ VAR
     pULint			: POINTER TO ULINT;
     pReal			: POINTER TO REAL;
     pLReal			: POINTER TO LREAL;
-    pString			: POINTER TO T_Long_String;
+    pString			: POINTER TO T_LongString;
     pWString		: POINTER TO WSTRING;
     pTime			: POINTER TO TIME;
     pDate			: POINTER TO DATE;
-    pDate_And_Time	: POINTER TO DATE_AND_TIME;
-    pTime_Of_Day	: POINTER TO TIME_OF_DAY;
+    pDateAndTime	: POINTER TO DATE_AND_TIME;
+    pTimeOfDay	: POINTER TO TIME_OF_DAY;
     pPointer		: POINTER TO PVOID;
 	pLTime 			: POINTER TO LTIME;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_STRTOANY := TRUE;
-IF Value.pValue = 0 THEN F_STRTOANY := FALSE; RETURN; END_IF;
+      <ST><![CDATA[F_StrToAny := TRUE;
+IF Value.pValue = 0 THEN F_StrToAny := FALSE; RETURN; END_IF;
 
 CASE Value.TypeClass OF 
 	__SYSTEM.TYPE_CLASS.TYPE_BOOL:
-		IF NOT F_ISBOOL(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsBool(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pBool := Value.pValue;
 		pBool^ := TO_BOOL(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_BYTE:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pByte := Value.pValue;
 		pByte^ := TO_BYTE(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_WORD:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pWord := Value.pValue;
 		pWord^ := TO_WORD(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_DWORD:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pDWord := Value.pValue;
 		pDWord^ := TO_DWORD(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_LWORD:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pLWord := Value.pValue;
 		pLWord^ := TO_LWORD(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_SINT:
-		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsSignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pSint := Value.pValue;
 		pSint^ := TO_SINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_INT:
-		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsSignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pInt := Value.pValue;
 		pInt^ := TO_INT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_DINT:
-		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsSignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pDint := Value.pValue;
 		pDint^ := TO_DINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_LINT:
-		IF NOT F_ISSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsSignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pLint := Value.pValue;
 		pLint^ := TO_LINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_USINT:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pUSint := Value.pValue;
 		pUSint^ := TO_USINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_UINT:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pUInt := Value.pValue;
 		pUInt^ := TO_UINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_UDINT:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pUDint := Value.pValue;
 		pUDint^ := TO_UDINT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_ULINT:
-		IF NOT F_ISUNSIGNEDINT(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsUnsignedInteger(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pULint := Value.pValue;
 		pULint^ := TO_ULINT(sValue);
 		
    __SYSTEM.TYPE_CLASS.TYPE_REAL:
-   		IF NOT F_ISNUM(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+   		IF NOT F_IsNumber(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pReal := Value.pValue;
 		pReal^ := TO_REAL(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_LREAL:
-		IF NOT F_ISNUM(sValue) THEN F_STRTOANY := FALSE; RETURN; END_IF
+		IF NOT F_IsNumber(sValue) THEN F_StrToAny := FALSE; RETURN; END_IF
 		pLReal := Value.pValue;
 		pLReal^ := TO_LREAL(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_STRING:
-		F_STRLCPY(Value.pValue, ADR(sValue),Value.diSize); 
+		F_StrLCpy(Value.pValue, ADR(sValue),Value.diSize); 
 		
    __SYSTEM.TYPE_CLASS.TYPE_WSTRING:
    		Tc2_Utilities.STRING_TO_WSTRING2(Value.pValue, ADR(sValue), TO_UDINT(Value.diSize));
 		
     __SYSTEM.TYPE_CLASS.TYPE_TIME:
-		IF NOT F_ISTIME(sValue) THEN RETURN; END_IF
+		IF NOT F_IsTime(sValue) THEN RETURN; END_IF
 		pTime := Value.pValue;
 		pTime^ := TO_TIME(sValue);
 		
 	__SYSTEM.TYPE_CLASS.TYPE_LTIME:
-		IF NOT F_ISLTIME(sValue) THEN RETURN; END_IF
+		IF NOT F_IsLTime(sValue) THEN RETURN; END_IF
 		pLTime := Value.pValue;
 		pLTime^ := TO_LTIME(sValue);
 		
@@ -133,67 +133,23 @@ CASE Value.TypeClass OF
 		pDate^ := TO_DATE(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_DATEANDTIME:
-		pDate_And_Time := Value.pValue;
-		pDate_And_Time^ := TO_DT(sValue);
+		pDateAndTime := Value.pValue;
+		pDateAndTime^ := TO_DT(sValue);
 		
     __SYSTEM.TYPE_CLASS.TYPE_TIMEOFDAY:
-		pTime_Of_Day := Value.pValue;
-		pTime_Of_Day^ := TO_TOD(sValue);
+		pTimeOfDay := Value.pValue;
+		pTimeOfDay^ := TO_TOD(sValue);
 	
 	__SYSTEM.TYPE_CLASS.TYPE_POINTER:
 		pPointer := Value.pValue;
 		pPointer^ := Tc2_Utilities.STRING_TO_PVOID(sValue);
 		
 ELSE
-	F_STRTOANY := FALSE;
+	F_StrToAny := FALSE;
 END_CASE]]></ST>
     </Implementation>
-    <LineIds Name="F_STRTOANY">
-      <LineId Id="289" Count="0" />
-      <LineId Id="160" Count="3" />
-      <LineId Id="323" Count="0" />
-      <LineId Id="164" Count="3" />
-      <LineId Id="324" Count="0" />
-      <LineId Id="168" Count="3" />
-      <LineId Id="398" Count="0" />
-      <LineId Id="172" Count="3" />
-      <LineId Id="399" Count="0" />
-      <LineId Id="176" Count="3" />
-      <LineId Id="400" Count="0" />
-      <LineId Id="180" Count="3" />
-      <LineId Id="356" Count="0" />
-      <LineId Id="184" Count="3" />
-      <LineId Id="357" Count="0" />
-      <LineId Id="188" Count="3" />
-      <LineId Id="358" Count="0" />
-      <LineId Id="192" Count="3" />
-      <LineId Id="359" Count="0" />
-      <LineId Id="196" Count="3" />
-      <LineId Id="360" Count="0" />
-      <LineId Id="200" Count="3" />
-      <LineId Id="361" Count="0" />
-      <LineId Id="204" Count="3" />
-      <LineId Id="362" Count="0" />
-      <LineId Id="208" Count="3" />
-      <LineId Id="363" Count="0" />
-      <LineId Id="212" Count="3" />
-      <LineId Id="366" Count="0" />
-      <LineId Id="216" Count="3" />
-      <LineId Id="367" Count="0" />
-      <LineId Id="220" Count="3" />
-      <LineId Id="286" Count="0" />
-      <LineId Id="226" Count="1" />
-      <LineId Id="287" Count="0" />
-      <LineId Id="230" Count="1" />
-      <LineId Id="431" Count="0" />
-      <LineId Id="232" Count="1" />
-      <LineId Id="433" Count="0" />
-      <LineId Id="435" Count="2" />
-      <LineId Id="434" Count="0" />
-      <LineId Id="234" Count="13" />
-      <LineId Id="288" Count="0" />
-      <LineId Id="248" Count="1" />
-      <LineId Id="253" Count="1" />
+    <LineIds Name="F_StrToAny">
+      <LineId Id="641" Count="112" />
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>

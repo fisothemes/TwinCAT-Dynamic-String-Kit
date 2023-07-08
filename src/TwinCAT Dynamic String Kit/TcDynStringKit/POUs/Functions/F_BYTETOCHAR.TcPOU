@@ -1,15 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
-  <POU Name="F_BYTETOCHAR" Id="{cc9ba165-219c-491b-8479-7738e7a1894d}" SpecialFunc="None">
+  <POU Name="F_ByteToChar" Id="{cc9ba165-219c-491b-8479-7738e7a1894d}" SpecialFunc="None">
     <Declaration><![CDATA[// Converts a BYTE to an ascii character
-FUNCTION F_BYTETOCHAR : T_Char
+FUNCTION F_ByteToChar : T_Char
 VAR_INPUT
 	nByte : BYTE;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_BYTETOCHAR[0] := nByte;]]></ST>
+      <ST><![CDATA[F_ByteToChar[0] := nByte;]]></ST>
     </Implementation>
-    <LineIds Name="F_BYTETOCHAR">
+    <LineIds Name="F_ByteToChar">
       <LineId Id="7" Count="0" />
     </LineIds>
   </POU>
