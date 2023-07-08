@@ -9,10 +9,10 @@ Working with the string builder.
 **Declarations:** 
 ```ST
 VAR
-	bStart 				: BOOL;
-	nLn1, nLn2 			: T_Size;
+	bStart 			: BOOL;
+	nLn1, nLn2 		: T_Size;
 	sValue1, sValue2	: STRING(255);
-	pString				: POINTER TO STRING;
+	pString			: POINTER TO STRING;
 	fbStringBuilder1,
 	fbStringBuilder2	: FB_StringBuilder;
 END_VAR
@@ -60,11 +60,11 @@ Working with the read-only adapter.
 **Declarations:** 
 ```ST
 VAR
-	bStart				: BOOL;
-	sValue 				: STRING(255);
-	nPos				: T_Size;
-	tTime 				: TIME :=  TIME();
-	tTime2				: TIME;
+	bStart			: BOOL;
+	sValue 			: STRING(255);
+	nPos			: T_Size;
+	tTime 			: TIME :=  TIME();
+	tTime2			: TIME;
 	fbStringBuilder 	: FB_StringBuilder;
 	fbReadOnlySB 		: FB_ReadOnlyStringBuilderAdapter;
 	ipReadOnlySB 		: I_ReadOnlyStringBuilderAdapter;
@@ -87,9 +87,9 @@ IF bStart THEN
 	END_IF
 
 sValue := ipReadOnlySB
-			.Search('T#', 0, Position => nPos)
-			.CopySubstringTo(nPos, tc2_Standard.LEN(TO_STRING(tTime)), tTime2)
-			.GetString();
+	.Search('T#', 0, Position => nPos)
+	.CopySubstringTo(nPos, tc2_Standard.LEN(TO_STRING(tTime)), tTime2)
+	.GetString();
 ```
 
 **Output:**
@@ -103,9 +103,9 @@ Working with the enumerator.
 **Declarations:** 
 ```ST
 VAR
-	bStart				: BOOL;
-	sValue				: STRING(255);
-	dtTime				: DT :=  DT#2023-5-8-12:55:23;
+	bStart			: BOOL;
+	sValue			: STRING(255);
+	dtTime			: DT :=  DT#2023-5-8-12:55:23;
 	fbStringBuilder1,
 	fbStringBuilder2	: FB_StringBuilder;
 	ipEnumerator		: I_Enumerator;
