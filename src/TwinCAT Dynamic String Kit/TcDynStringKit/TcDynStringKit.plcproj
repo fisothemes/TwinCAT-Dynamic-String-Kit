@@ -1,3 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <FileVersion>1.0.0.0</FileVersion>
@@ -18,16 +19,13 @@
     <Company>FisoThemes</Company>
     <Released>false</Released>
     <Title>TwinCAT Dynamic String Kit</Title>
-    <ProjectVersion>1.0.1.1</ProjectVersion>
+    <ProjectVersion>1.0.2.2</ProjectVersion>
     <DefaultNamespace>TcDynStringKit</DefaultNamespace>
     <CombineIds>true</CombineIds>
     <Author>Goodwill Mzumala</Author>
     <Description>A library that provides tools for working with dynamic strings in TwinCAT.</Description>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\Alias\T_QueryInterface.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\Alias\T_ShortString.TcDUT">
       <SubType>Code</SubType>
     </Compile>
@@ -62,6 +60,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ITFs\Builders\I_WordBuilder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ITFs\Common\I_QueryInterface.TcIO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ITFs\Enumerators\I_Disposable.TcIO">
@@ -211,6 +212,7 @@
     <Folder Include="ITFs\Adapters" />
     <Folder Include="ITFs\Builders" />
     <Folder Include="ITFs\Enumerators" />
+    <Folder Include="ITFs\Common" />
     <Folder Include="PARAMs" />
     <Folder Include="PARAMs\GVLs" />
     <Folder Include="POUs\Function Blocks\_Internal" />

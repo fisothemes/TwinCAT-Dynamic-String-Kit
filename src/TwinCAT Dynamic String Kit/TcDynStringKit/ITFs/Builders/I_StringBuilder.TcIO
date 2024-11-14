@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
   <Itf Name="I_StringBuilder" Id="{0720aa24-e3c8-41ae-a5a5-43696928f33d}">
-    <Declaration><![CDATA[INTERFACE I_StringBuilder EXTENDS T_QueryInterface
+    <Declaration><![CDATA[INTERFACE I_StringBuilder EXTENDS I_QueryInterface
 ]]></Declaration>
     <Method Name="Append" Id="{19b8fae6-09f3-4d84-ae29-bb5020725b33}">
       <Declaration><![CDATA[// Appends the given string to the end of the string builder's contents.
@@ -213,7 +213,7 @@ VAR_INPUT
 	Start_Position : T_Size;
 END_VAR
 VAR_OUTPUT
-	Position : T_Size := -1;
+	Position : T_Size;
 END_VAR]]></Declaration>
     </Method>
     <Method Name="Split" Id="{d9a27e86-600a-4dac-a484-7322fdc46d5c}">

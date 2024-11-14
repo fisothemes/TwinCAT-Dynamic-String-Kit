@@ -3,13 +3,10 @@
   <POU Name="F_CharToByte" Id="{ffe05fa9-9469-43fe-addd-9fa01c298718}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION F_CharToByte : BYTE
 VAR_INPUT
-	Char : T_Char;
+	t_Char : T_Char;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_CharToByte := Char[0];]]></ST>
+      <ST><![CDATA[F_CharToByte := t_Char[0];]]></ST>
     </Implementation>
-    <LineIds Name="F_CharToByte">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

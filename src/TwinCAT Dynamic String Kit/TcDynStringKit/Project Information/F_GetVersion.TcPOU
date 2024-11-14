@@ -12,13 +12,9 @@ END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[F_GetVersion.iMajor := 1;
 F_GetVersion.iMinor := 0;
-F_GetVersion.iBuild := 1;
-F_GetVersion.iRevision := 1;
+F_GetVersion.iBuild := 2;
+F_GetVersion.iRevision := 2;
 ]]></ST>
     </Implementation>
-    <LineIds Name="F_GetVersion">
-      <LineId Id="61" Count="3" />
-      <LineId Id="2" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

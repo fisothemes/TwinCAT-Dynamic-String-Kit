@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.4">
   <Itf Name="I_ReadOnlyStringBuilderAdapter" Id="{5264e9f2-b93b-4304-a4e6-1a7c14e03562}">
-    <Declaration><![CDATA[INTERFACE I_ReadOnlyStringBuilderAdapter EXTENDS T_QueryInterface
+    <Declaration><![CDATA[INTERFACE I_ReadOnlyStringBuilderAdapter EXTENDS I_QueryInterface
 ]]></Declaration>
     <Property Name="Capacity" Id="{77192ab3-e393-4c94-82a6-64aa523d95e1}">
       <Declaration><![CDATA[// Number of bytes allocated in memory for the string builder's contents.
@@ -96,7 +96,7 @@ VAR_INPUT
 	Start_Position : T_Size;
 END_VAR
 VAR_OUTPUT
-	Position : T_Size := -1;
+	Position : T_Size;
 END_VAR]]></Declaration>
     </Method>
     <Method Name="Split" Id="{cedbc40b-8c04-4d01-99bf-79ac598c518d}">

@@ -4,14 +4,17 @@
     <Declaration><![CDATA[// Checks if a character is ' '(space) '$t' (horizontal tab) '$n' (newline) '$r' (carriage return) '$f' (form feed) '$v' (vertical tab)
 FUNCTION F_IsSpace : BOOL
 VAR_INPUT
-	Char : T_Char;
+	t_Char : T_Char;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_IsSpace := (Char[0] = 32) OR_ELSE (Char[0] = 9) OR_ELSE (Char[0] = 10) OR_ELSE (Char[0] = 13) OR_ELSE (Char[0] = 12) OR_ELSE (Char[0] = 11);]]></ST>
+      <ST><![CDATA[F_IsSpace := 
+	(t_Char[0] = 32) OR_ELSE 
+	(t_Char[0] = 09) OR_ELSE 
+	(t_Char[0] = 10) OR_ELSE 
+	(t_Char[0] = 13) OR_ELSE 
+	(t_Char[0] = 12) OR_ELSE 
+	(t_Char[0] = 11);]]></ST>
     </Implementation>
-    <LineIds Name="F_IsSpace">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

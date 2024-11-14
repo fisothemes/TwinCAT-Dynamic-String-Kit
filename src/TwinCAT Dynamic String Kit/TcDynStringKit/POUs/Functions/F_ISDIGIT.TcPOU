@@ -4,14 +4,11 @@
     <Declaration><![CDATA[// Checks if a character is a digit
 FUNCTION F_IsDigit : BOOL
 VAR_INPUT
-	Char : T_Char;
+	t_Char : T_Char;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[F_IsDigit := Char >= '0' AND Char <= '9';]]></ST>
+      <ST><![CDATA[F_IsDigit := t_Char >= '0' AND t_Char <= '9';]]></ST>
     </Implementation>
-    <LineIds Name="F_IsDigit">
-      <LineId Id="7" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -28,17 +28,8 @@ IF bStart THEN
 
 sValue := ipReadOnlySB
 			.Search('T#', 0, Position => nPos)
-			.CopySubstringTo(nPos, tc2_Standard.LEN(TO_STRING(tTime)), tTime2)
+			.CopySubstringTo(nPos, tc2_Standard.LEN(TIME_TO_STRING(tTime)), tTime2)
 			.GetString();]]></ST>
     </Implementation>
-    <LineIds Name="P_AdapterExample">
-      <LineId Id="173" Count="5" />
-      <LineId Id="199" Count="0" />
-      <LineId Id="179" Count="1" />
-      <LineId Id="188" Count="0" />
-      <LineId Id="187" Count="0" />
-      <LineId Id="182" Count="4" />
-      <LineId Id="66" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

@@ -705,7 +705,7 @@ VAR_INPUT
 	ipStringBuilder : I_StringBuilder;
 END_VAR
 VAR
-	Char : T_Char;
+	t_Char : T_Char;
 	i, End_Position : T_Size;
 END_VAR]]></Declaration>
       <Implementation>
@@ -716,8 +716,8 @@ End_Position := Position + Length;
 IF End_Position > THIS^.Length THEN End_Position := THIS^.Length; END_IF
 
 FOR i := Position TO End_Position - 1 DO
-	Char[0] := THIS^._pBuffer^[i];
-	ipStringBuilder.Append(Char);
+	t_Char[0] := THIS^._pBuffer^[i];
+	ipStringBuilder.Append(t_Char);
 	END_FOR]]></ST>
       </Implementation>
     </Method>
@@ -771,201 +771,5 @@ FOR i := 0 TO THIS^.Length - 1 DO
 	END_FOR]]></ST>
       </Implementation>
     </Method>
-    <LineIds Name="FB_StringBuilder">
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Append">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.AppendAny">
-      <LineId Id="301" Count="46" />
-      <LineId Id="33" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.AppendBuffer">
-      <LineId Id="8" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="16" Count="1" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="19" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.AppendLine">
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.BTrim">
-      <LineId Id="7" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="14" Count="3" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Capacity.Get">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Capacity.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Clear">
-      <LineId Id="7" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="13" Count="1" />
-      <LineId Id="10" Count="1" />
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.CopySubstringTo">
-      <LineId Id="174" Count="16" />
-      <LineId Id="37" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.CopyTo">
-      <LineId Id="63" Count="8" />
-      <LineId Id="30" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Free">
-      <LineId Id="5" Count="0" />
-      <LineId Id="16" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.GetBuffer">
-      <LineId Id="5" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="12" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.GetCapacity">
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.GetChar">
-      <LineId Id="8" Count="0" />
-      <LineId Id="7" Count="0" />
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.GetEnumerator">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.GetLength">
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.GetString">
-      <LineId Id="6" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.GetSubstring">
-      <LineId Id="6" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Insert">
-      <LineId Id="15" Count="0" />
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.InsertAny">
-      <LineId Id="313" Count="48" />
-      <LineId Id="16" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.InsertBuffer">
-      <LineId Id="15" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="33" Count="6" />
-      <LineId Id="32" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Is_Space">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Join">
-      <LineId Id="5" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="30" Count="2" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Length.Get">
-      <LineId Id="8" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Length.Set">
-      <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.LTrim">
-      <LineId Id="7" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="12" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="14" Count="3" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Malloc">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Remove">
-      <LineId Id="30" Count="0" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="31" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Replace">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.ReplaceAny">
-      <LineId Id="181" Count="19" />
-      <LineId Id="68" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Reserve">
-      <LineId Id="25" Count="4" />
-      <LineId Id="13" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Reverse">
-      <LineId Id="5" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="16" Count="1" />
-      <LineId Id="21" Count="1" />
-      <LineId Id="18" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.RTrim">
-      <LineId Id="7" Count="0" />
-      <LineId Id="6" Count="0" />
-      <LineId Id="10" Count="0" />
-      <LineId Id="16" Count="1" />
-      <LineId Id="12" Count="3" />
-      <LineId Id="11" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Search">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.SearchAny">
-      <LineId Id="182" Count="40" />
-      <LineId Id="112" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.Split">
-      <LineId Id="47" Count="8" />
-      <LineId Id="26" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.StrinkToFit">
-      <LineId Id="5" Count="0" />
-      <LineId Id="7" Count="1" />
-      <LineId Id="11" Count="1" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="13" Count="0" />
-      <LineId Id="9" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.ToLowercase">
-      <LineId Id="6" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="12" Count="3" />
-      <LineId Id="11" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_StringBuilder.ToUppercase">
-      <LineId Id="5" Count="0" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="9" Count="0" />
-      <LineId Id="11" Count="0" />
-      <LineId Id="13" Count="1" />
-      <LineId Id="12" Count="0" />
-    </LineIds>
   </POU>
 </TcPlcObject>

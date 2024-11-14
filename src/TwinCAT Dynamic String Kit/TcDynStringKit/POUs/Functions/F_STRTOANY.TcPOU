@@ -28,7 +28,7 @@ VAR
     pTime			: POINTER TO TIME;
     pDate			: POINTER TO DATE;
     pDateAndTime	: POINTER TO DATE_AND_TIME;
-    pTimeOfDay	: POINTER TO TIME_OF_DAY;
+    pTimeOfDay		: POINTER TO TIME_OF_DAY;
     pPointer		: POINTER TO PVOID;
 	pLTime 			: POINTER TO LTIME;
 END_VAR]]></Declaration>
